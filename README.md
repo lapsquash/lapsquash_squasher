@@ -1,0 +1,2 @@
+# lapsquash_squasher
+カメラモジュールからの映像をぶった切る service
