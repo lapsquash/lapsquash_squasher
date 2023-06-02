@@ -1,0 +1,72 @@
+{
+  "name": "@lapsquash/squasher",
+  "version": "0.0.1",
+  "description": "squasher for lapsquash",
+  "author": {
+    "name": "lapsquash",
+    "email": "wappon_28_dev@lapsquash.my.to"
+  },
+  "repository": "lapsquash/lapsquash_viewer",
+  "private": true,
+  "bin": {
+    "lapsqsher": "./bin/run"
+  },
+  "license": "MIT",
+  "main": "dist/index.js",
+  "files": [
+    "/bin",
+    "/dist",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json"
+  ],
+  "scripts": {
+    "build": "shx rm -rf dist && tsc -b",
+    "lint": "eslint --fix",
+    "postpack": "shx rm -f oclif.manifest.json",
+    "posttest": "yarn lint",
+    "prepack": "yarn build && oclif manifest && oclif readme",
+    "version": "oclif readme && git add README.md"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "keywords": [
+    "oclif"
+  ],
+  "types": "dist/index.d.ts",
+  "dependencies": {
+    "@oclif/core": "^2",
+    "@oclif/plugin-help": "^5",
+    "@oclif/plugin-plugins": "^2.4.7"
+  },
+  "devDependencies": {
+    "@oclif/test": "^2.3.21",
+    "@trpc/client": "^10.29.0",
+    "@types/chai": "^4",
+    "@types/node": "^16.18.34",
+    "chai": "^4",
+    "eslint": "^7.32.0",
+    "eslint-config-oclif": "^4",
+    "eslint-config-oclif-typescript": "^1.0.3",
+    "oclif": "^3",
+    "shx": "^0.3.3",
+    "ts-node": "^10.9.1",
+    "tslib": "^2.5.2",
+    "typescript": "^4.9.5"
+  },
+  "oclif": {
+    "bin": "lapsqsher",
+    "dirname": "lapser",
+    "commands": "./dist/commands",
+    "plugins": [
+      "@oclif/plugin-help",
+      "@oclif/plugin-plugins"
+    ],
+    "topicSeparator": " ",
+    "topics": {
+      "hello": {
+        "description": "Say hello to the world and others"
+      }
+    }
+  }
+}

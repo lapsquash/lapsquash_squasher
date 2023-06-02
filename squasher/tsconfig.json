@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "importHelpers": true,
+    "module": "commonjs",
+    "outDir": "dist",
+    "rootDir": "src",
+    "strict": true,
+    "target": "ES2022",
+    "paths": {
+      "*": ["../analyzer/src/*", "./src/*"],
+      "@analyzer": ["../analyzer/src/routes"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["../analyzer/**/*"]
+}

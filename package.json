@@ -1,0 +1,17 @@
+{
+  "name": "lapsquash",
+  "description": "lapsquash",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "./squasher/bin/dev",
+    "dev:analyzer": "yarn workspace @lapsquash/analyzer run dev",
+    "test:analyzer": "yarn workspace @lapsquash/analyzer run test"
+  },
+  "workspaces": {
+    "packages": [
+      "analyzer",
+      "squasher"
+    ]
+  }
+}
