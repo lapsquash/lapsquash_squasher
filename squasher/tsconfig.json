@@ -12,6 +12,6 @@
       "@analyzer": ["../analyzer/src/routes"]
     }
   },
-  "include": ["src/**/*"],
+  "include": ["./src/**/*"],
   "exclude": ["../analyzer/**/*"]
 }

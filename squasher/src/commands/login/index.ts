@@ -1,6 +1,7 @@
 import { Args, Command, Flags } from "@oclif/core";
+import { client } from "lib/service/client";
 
-export default class Test extends Command {
+export default class Login extends Command {
   static description = "Say hello";
 
   static examples = [
@@ -25,6 +26,10 @@ hello friend from oclif! (./src/commands/hello/index.ts)
   };
 
   async run(): Promise<void> {
-    this.log("test");
+    const result = await client.auth.getCredential.query({
+      code: "",
+    });
+    this.log(result);
+    this.log("howdy");
   }
 }
