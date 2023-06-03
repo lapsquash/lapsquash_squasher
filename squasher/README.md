@@ -18,13 +18,13 @@ oclif example Hello World CLI
 <!-- usage -->
 ```sh-session
 $ npm install -g @lapsquash/squasher
-$ lapsqsher COMMAND
+$ lapsquasher COMMAND
 running command...
-$ lapsqsher (--version)
+$ lapsquasher (--version)
 @lapsquash/squasher/0.0.1 win32-x64 node-v18.13.0
-$ lapsqsher --help [COMMAND]
+$ lapsquasher --help [COMMAND]
 USAGE
-  $ lapsqsher COMMAND
+  $ lapsquasher COMMAND
 ...
 ```
 <!-- usagestop -->
@@ -42,27 +42,27 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`lapsqsher hello PERSON`](#lapsqsher-hello-person)
-* [`lapsqsher hello world`](#lapsqsher-hello-world)
-* [`lapsqsher help [COMMANDS]`](#lapsqsher-help-commands)
-* [`lapsqsher plugins`](#lapsqsher-plugins)
-* [`lapsqsher plugins:install PLUGIN...`](#lapsqsher-pluginsinstall-plugin)
-* [`lapsqsher plugins:inspect PLUGIN...`](#lapsqsher-pluginsinspect-plugin)
-* [`lapsqsher plugins:install PLUGIN...`](#lapsqsher-pluginsinstall-plugin-1)
-* [`lapsqsher plugins:link PLUGIN`](#lapsqsher-pluginslink-plugin)
-* [`lapsqsher plugins:uninstall PLUGIN...`](#lapsqsher-pluginsuninstall-plugin)
-* [`lapsqsher plugins:uninstall PLUGIN...`](#lapsqsher-pluginsuninstall-plugin-1)
-* [`lapsqsher plugins:uninstall PLUGIN...`](#lapsqsher-pluginsuninstall-plugin-2)
-* [`lapsqsher plugins update`](#lapsqsher-plugins-update)
-* [`lapsqsher test PERSON`](#lapsqsher-test-person)
+* [`lapsquasher hello PERSON`](#lapsquasher-hello-person)
+* [`lapsquasher hello world`](#lapsquasher-hello-world)
+* [`lapsquasher help [COMMANDS]`](#lapsquasher-help-commands)
+* [`lapsquasher plugins`](#lapsquasher-plugins)
+* [`lapsquasher plugins:install PLUGIN...`](#lapsquasher-pluginsinstall-plugin)
+* [`lapsquasher plugins:inspect PLUGIN...`](#lapsquasher-pluginsinspect-plugin)
+* [`lapsquasher plugins:install PLUGIN...`](#lapsquasher-pluginsinstall-plugin-1)
+* [`lapsquasher plugins:link PLUGIN`](#lapsquasher-pluginslink-plugin)
+* [`lapsquasher plugins:uninstall PLUGIN...`](#lapsquasher-pluginsuninstall-plugin)
+* [`lapsquasher plugins:uninstall PLUGIN...`](#lapsquasher-pluginsuninstall-plugin-1)
+* [`lapsquasher plugins:uninstall PLUGIN...`](#lapsquasher-pluginsuninstall-plugin-2)
+* [`lapsquasher plugins update`](#lapsquasher-plugins-update)
+* [`lapsquasher test PERSON`](#lapsquasher-test-person)
 
-## `lapsqsher hello PERSON`
+## `lapsquasher hello PERSON`
 
 Say hello
 
 ```
 USAGE
-  $ lapsqsher hello PERSON -f <value>
+  $ lapsquasher hello PERSON -f <value>
 
 ARGUMENTS
   PERSON  Person to say hello to
@@ -80,29 +80,29 @@ EXAMPLES
 
 _See code: [dist/commands/hello/index.ts](https://github.com/lapsquash/lapsquash_viewer/blob/v0.0.1/dist/commands/hello/index.ts)_
 
-## `lapsqsher hello world`
+## `lapsquasher hello world`
 
 Say hello world
 
 ```
 USAGE
-  $ lapsqsher hello world
+  $ lapsquasher hello world
 
 DESCRIPTION
   Say hello world
 
 EXAMPLES
-  $ lapsqsher hello world
+  $ lapsquasher hello world
   hello world! (./src/commands/hello/world.ts)
 ```
 
-## `lapsqsher help [COMMANDS]`
+## `lapsquasher help [COMMANDS]`
 
-Display help for lapsqsher.
+Display help for lapsquasher.
 
 ```
 USAGE
-  $ lapsqsher help [COMMANDS] [-n]
+  $ lapsquasher help [COMMANDS] [-n]
 
 ARGUMENTS
   COMMANDS  Command to show help for.
@@ -111,18 +111,18 @@ FLAGS
   -n, --nested-commands  Include all nested commands in the output.
 
 DESCRIPTION
-  Display help for lapsqsher.
+  Display help for lapsquasher.
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.2.9/src/commands/help.ts)_
 
-## `lapsqsher plugins`
+## `lapsquasher plugins`
 
 List installed plugins.
 
 ```
 USAGE
-  $ lapsqsher plugins [--core]
+  $ lapsquasher plugins [--core]
 
 FLAGS
   --core  Show core plugins.
@@ -131,18 +131,18 @@ DESCRIPTION
   List installed plugins.
 
 EXAMPLES
-  $ lapsqsher plugins
+  $ lapsquasher plugins
 ```
 
 _See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.4.7/src/commands/plugins/index.ts)_
 
-## `lapsqsher plugins:install PLUGIN...`
+## `lapsquasher plugins:install PLUGIN...`
 
 Installs a plugin into the CLI.
 
 ```
 USAGE
-  $ lapsqsher plugins:install PLUGIN...
+  $ lapsquasher plugins:install PLUGIN...
 
 ARGUMENTS
   PLUGIN  Plugin to install.
@@ -164,23 +164,23 @@ DESCRIPTION
 
 
 ALIASES
-  $ lapsqsher plugins add
+  $ lapsquasher plugins add
 
 EXAMPLES
-  $ lapsqsher plugins:install myplugin 
+  $ lapsquasher plugins:install myplugin 
 
-  $ lapsqsher plugins:install https://github.com/someuser/someplugin
+  $ lapsquasher plugins:install https://github.com/someuser/someplugin
 
-  $ lapsqsher plugins:install someuser/someplugin
+  $ lapsquasher plugins:install someuser/someplugin
 ```
 
-## `lapsqsher plugins:inspect PLUGIN...`
+## `lapsquasher plugins:inspect PLUGIN...`
 
 Displays installation properties of a plugin.
 
 ```
 USAGE
-  $ lapsqsher plugins:inspect PLUGIN...
+  $ lapsquasher plugins:inspect PLUGIN...
 
 ARGUMENTS
   PLUGIN  [default: .] Plugin to inspect.
@@ -196,16 +196,16 @@ DESCRIPTION
   Displays installation properties of a plugin.
 
 EXAMPLES
-  $ lapsqsher plugins:inspect myplugin
+  $ lapsquasher plugins:inspect myplugin
 ```
 
-## `lapsqsher plugins:install PLUGIN...`
+## `lapsquasher plugins:install PLUGIN...`
 
 Installs a plugin into the CLI.
 
 ```
 USAGE
-  $ lapsqsher plugins:install PLUGIN...
+  $ lapsquasher plugins:install PLUGIN...
 
 ARGUMENTS
   PLUGIN  Plugin to install.
@@ -227,23 +227,23 @@ DESCRIPTION
 
 
 ALIASES
-  $ lapsqsher plugins add
+  $ lapsquasher plugins add
 
 EXAMPLES
-  $ lapsqsher plugins:install myplugin 
+  $ lapsquasher plugins:install myplugin 
 
-  $ lapsqsher plugins:install https://github.com/someuser/someplugin
+  $ lapsquasher plugins:install https://github.com/someuser/someplugin
 
-  $ lapsqsher plugins:install someuser/someplugin
+  $ lapsquasher plugins:install someuser/someplugin
 ```
 
-## `lapsqsher plugins:link PLUGIN`
+## `lapsquasher plugins:link PLUGIN`
 
 Links a plugin into the CLI for development.
 
 ```
 USAGE
-  $ lapsqsher plugins:link PLUGIN
+  $ lapsquasher plugins:link PLUGIN
 
 ARGUMENTS
   PATH  [default: .] path to plugin
@@ -261,16 +261,16 @@ DESCRIPTION
 
 
 EXAMPLES
-  $ lapsqsher plugins:link myplugin
+  $ lapsquasher plugins:link myplugin
 ```
 
-## `lapsqsher plugins:uninstall PLUGIN...`
+## `lapsquasher plugins:uninstall PLUGIN...`
 
 Removes a plugin from the CLI.
 
 ```
 USAGE
-  $ lapsqsher plugins:uninstall PLUGIN...
+  $ lapsquasher plugins:uninstall PLUGIN...
 
 ARGUMENTS
   PLUGIN  plugin to uninstall
@@ -283,17 +283,17 @@ DESCRIPTION
   Removes a plugin from the CLI.
 
 ALIASES
-  $ lapsqsher plugins unlink
-  $ lapsqsher plugins remove
+  $ lapsquasher plugins unlink
+  $ lapsquasher plugins remove
 ```
 
-## `lapsqsher plugins:uninstall PLUGIN...`
+## `lapsquasher plugins:uninstall PLUGIN...`
 
 Removes a plugin from the CLI.
 
 ```
 USAGE
-  $ lapsqsher plugins:uninstall PLUGIN...
+  $ lapsquasher plugins:uninstall PLUGIN...
 
 ARGUMENTS
   PLUGIN  plugin to uninstall
@@ -306,17 +306,17 @@ DESCRIPTION
   Removes a plugin from the CLI.
 
 ALIASES
-  $ lapsqsher plugins unlink
-  $ lapsqsher plugins remove
+  $ lapsquasher plugins unlink
+  $ lapsquasher plugins remove
 ```
 
-## `lapsqsher plugins:uninstall PLUGIN...`
+## `lapsquasher plugins:uninstall PLUGIN...`
 
 Removes a plugin from the CLI.
 
 ```
 USAGE
-  $ lapsqsher plugins:uninstall PLUGIN...
+  $ lapsquasher plugins:uninstall PLUGIN...
 
 ARGUMENTS
   PLUGIN  plugin to uninstall
@@ -329,17 +329,17 @@ DESCRIPTION
   Removes a plugin from the CLI.
 
 ALIASES
-  $ lapsqsher plugins unlink
-  $ lapsqsher plugins remove
+  $ lapsquasher plugins unlink
+  $ lapsquasher plugins remove
 ```
 
-## `lapsqsher plugins update`
+## `lapsquasher plugins update`
 
 Update installed plugins.
 
 ```
 USAGE
-  $ lapsqsher plugins update [-h] [-v]
+  $ lapsquasher plugins update [-h] [-v]
 
 FLAGS
   -h, --help     Show CLI help.
@@ -349,13 +349,13 @@ DESCRIPTION
   Update installed plugins.
 ```
 
-## `lapsqsher test PERSON`
+## `lapsquasher test PERSON`
 
 Say hello
 
 ```
 USAGE
-  $ lapsqsher test PERSON -f <value>
+  $ lapsquasher test PERSON -f <value>
 
 ARGUMENTS
   PERSON  Person to say hello to

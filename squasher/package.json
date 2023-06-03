@@ -9,7 +9,7 @@
   "repository": "lapsquash/lapsquash_viewer",
   "private": true,
   "bin": {
-    "lapsqsher": "./bin/run"
+    "lapsquasher": "./bin/run"
   },
   "license": "MIT",
   "main": "dist/index.js",
@@ -55,8 +55,8 @@
     "typescript": "^4.9.5"
   },
   "oclif": {
-    "bin": "lapsqsher",
-    "dirname": "lapser",
+    "bin": "lapsquasher",
+    "dirname": "lapsquasher",
     "commands": "./dist/commands",
     "plugins": [
       "@oclif/plugin-help",

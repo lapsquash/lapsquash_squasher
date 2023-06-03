@@ -1,8 +1,8 @@
 import { Args, Command, Flags } from "@oclif/core";
-import { client } from "lib/service/client";
+import { client } from "../../lib/service/client";
 
 export default class Login extends Command {
-  static description = "Say hello";
+  static description = "Say hell o";
 
   static examples = [
     `$ oex hello friend --from oclif
