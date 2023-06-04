@@ -1,18 +1,22 @@
 {
+  "extends": "@tsconfig/strictest/tsconfig.json",
   "compilerOptions": {
-    "declaration": true,
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "declaration": false,
     "importHelpers": true,
-    "module": "commonjs",
     "outDir": "dist",
     "skipLibCheck": true,
     "rootDirs": ["./src"],
-    "strict": true,
-    "target": "ES2022",
+    "baseUrl": "./src",
     "paths": {
-      "*": ["../analyzer/src/*", "./src/*"],
-      "@analyzer": ["../analyzer/src/routes"]
+      // FIXME: なぜか相対パスで指定しないと動かない
+      // "@/*": ["src/*"],
+      "*": ["../../analyzer/src/*"],
+      "@analyzer": ["../../analyzer/src/routes"]
     }
   },
-  "include": ["./src/**/*"],
-  "exclude": ["../analyzer/**/*"]
+  "include": ["src/**/*"],
+  "exclude": ["../../analyzer/src/**/*"]
 }
