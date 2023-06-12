@@ -10,15 +10,14 @@ export const analyzer = {
       }),
     ],
   }),
-  protected: (credential: string) =>
-    createTRPCProxyClient<AppRouter>({
-      links: [
-        httpBatchLink({
-          url: "http://127.0.0.1:8787/trpc",
-          headers: {
-            authorization: `Bearer ${credential}`,
-          },
-        }),
-      ],
-    }),
+  protected: createTRPCProxyClient<AppRouter>({
+    links: [
+      httpBatchLink({
+        url: "http://127.0.0.1:8787/trpc",
+        headers: {
+          authorization: `Bearer //todo`,
+        },
+      }),
+    ],
+  }),
 };

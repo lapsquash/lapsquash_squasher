@@ -1,5 +1,6 @@
 import { Command } from "@oclif/core";
 
+import { saveConfig } from "../../lib/config";
 import { runAuthRedirect, serveAuthCode } from "../../lib/service/auth";
 import { analyzer } from "../../lib/service/client";
 
@@ -20,8 +21,9 @@ export default class Login extends Command {
 
     const credential = await analyzer.public.auth.getCredential.query({ code });
     this.log(`🔐 credential received:\n  ${credential}\n`);
+    await saveConfig({ credential });
 
-    const me = await analyzer.protected(credential).me.info.query();
+    const me = await analyzer.protected.me.info.query();
     this.log(`✅ me received:\n  ${JSON.stringify(me)}\n`);
 
     this.log(
