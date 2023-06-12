@@ -1,24 +1,42 @@
 import { exec } from "child_process";
-import { createServer } from "http";
+import { IncomingMessage, createServer } from "http";
 import { ENV } from "../../lib/env";
 
-export const getCode = async (): Promise<string> =>
-  new Promise((resolve, reject) => {
-    const server = createServer((req, res) => {
-      const code = req.url?.split("code=")[1];
-      if (code) {
-        res.end("You can close this window now.");
-        return resolve(code);
-      } else {
-        res.end("No code found.");
-        return reject("No code found.");
-      }
+const request2authCode = (req: IncomingMessage) => {
+  const url = new URL(req.url!, "http://localhost:3000");
+  const searchParams = url.searchParams;
+  return searchParams.get("code") ?? undefined;
+};
+
+export async function serveAuthCode(timeoutMs: number): Promise<string> {
+  const server = createServer();
+
+  return new Promise<string>((resolve, reject) => {
+    server.listen(3000, () => {
+      console.log("🔥 Server listening on port 3000...\n");
     });
 
-    server.listen(new URL(ENV.REDIRECT_URI).port, () => {
-      console.log("Server listening...");
+    server.on("request", async (req, res) => {
+      const authCode = request2authCode(req);
+
+      if (authCode == undefined) {
+        res.end("No auth code found");
+        reject(new Error("No auth code found"));
+        return;
+      }
+
+      res.end("You can close this window now");
+
+      resolve(authCode!);
+      return;
     });
+
+    setTimeout(() => {
+      server.close();
+      reject(new Error("Authentication Timeout"));
+    }, timeoutMs);
   });
+}
 
 export const runAuthRedirect = async (): Promise<void> => {
   const queries = {
@@ -36,7 +54,7 @@ export const runAuthRedirect = async (): Promise<void> => {
     query,
   ];
 
-  console.log("Opening browser..." + url.join(""));
+  console.log(`🌐 Opening browser...\n  ${url.join("")}\n`);
 
   if (process.platform === "win32") {
     exec(`start ${url.join("").replaceAll("&", "^&")}`);
