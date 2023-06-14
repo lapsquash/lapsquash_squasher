@@ -1,5 +1,6 @@
 import { Command } from "@oclif/core";
-import { readConfig, saveConfig } from "../../lib/config";
+import { readConfig } from "../../lib/config";
+import { analyzer } from "../../lib/service/client";
 
 export default class Login extends Command {
   static override description = "describe the command here";
@@ -11,8 +12,9 @@ export default class Login extends Command {
   static override args = {};
 
   public async run(): Promise<void> {
-    await saveConfig({ credential: "credential" });
+    const credential = (await readConfig()).credential;
+    const me = await analyzer.protected(credential).me.info.query();
 
-    console.log(await readConfig());
+    this.log(JSON.stringify(me));
   }
 }

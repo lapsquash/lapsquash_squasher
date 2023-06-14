@@ -23,7 +23,7 @@ export default class Login extends Command {
     this.log(`🔐 credential received:\n  ${credential}\n`);
     await saveConfig({ credential });
 
-    const me = await analyzer.protected.me.info.query();
+    const me = await analyzer.protected(credential).me.info.query();
     this.log(`✅ me received:\n  ${JSON.stringify(me)}\n`);
 
     this.log(
