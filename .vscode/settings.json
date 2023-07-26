@@ -1,8 +1,14 @@
 {
-  "cSpell.words": ["APPDATA", "lapsquash", "lapsquasher", "oclif", "TRPC"],
+  "cSpell.words": [
+    "APPDATA",
+    "lapsquash",
+    "lapsquasher",
+    "oclif",
+    "TRPC",
+    "YOLO"
+  ],
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
   },
-  "python.formatting.provider": "none",
-  "python.poetryPath": "/Users/w28d/Library/Caches/pypoetry/virtualenvs"
+  "python.defaultInterpreterPath": "squasher_py/.venv/bin/python"
 }
