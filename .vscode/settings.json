@@ -6,6 +6,7 @@
     "lapsquash",
     "lapsquasher",
     "oclif",
+    "pyqtgraph",
     "TRPC",
     "YOLO"
   ],
