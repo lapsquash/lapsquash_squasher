@@ -12,6 +12,7 @@ class StateData:
     FPS: float
     frameIndex: int
     frameBuff: np.ndarray
+    hashArr: np.ndarray
 
 
 class State(StateData):
@@ -27,6 +28,7 @@ class State(StateData):
 
         self.frameIndex: int = 0
         self.frameBuff = np.array([], dtype=np.uint64)
+        self.hashArr = np.array([], dtype=np.uint64)
 
     def __del__(self):
         print("Releasing capture")

@@ -22,7 +22,8 @@ class CameraWidget(Widget):
         return widget
 
     def update(self) -> None:
-        _frameBuff = self.state.frameBuff
+        __state = self.state
+        __frameBuff = __state.frameBuff
 
         print(
             f"{self.state.frameIndex}\t{(self.state.frameIndex/self.state.FPS):.2f}",  # noqa
@@ -30,7 +31,7 @@ class CameraWidget(Widget):
         )
 
         # BGR -> RGB
-        _frameBuff = cv2.cvtColor(_frameBuff, cv2.COLOR_BGR2RGB)
-        _frameBuff = cv2.rotate(_frameBuff, cv2.ROTATE_90_CLOCKWISE)
+        __frameBuff = cv2.cvtColor(__frameBuff, cv2.COLOR_BGR2RGB)
+        __frameBuff = cv2.rotate(__frameBuff, cv2.ROTATE_90_CLOCKWISE)
 
-        self.imageItem.setImage(_frameBuff)
+        self.imageItem.setImage(__frameBuff)

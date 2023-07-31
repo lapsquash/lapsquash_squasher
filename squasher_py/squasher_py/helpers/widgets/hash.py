@@ -10,7 +10,6 @@ from squasher_py.helpers.state import State
 
 class HashWidget(Widget):
     scatterPlotItem = pg.PlotCurveItem()
-    hashArr = np.array([], dtype=np.uint64)
 
     def __init__(self, state: State) -> None:
         self.state = state
@@ -32,16 +31,17 @@ class HashWidget(Widget):
         return widget
 
     def update(self) -> None:
-        _frameBuff = self.state.frameBuff
+        __state = self.state
+        __frameBuff = __state.frameBuff
+        __frameIdx = __state.frameIndex
+        __hashArr = __state.hashArr
 
-        if len(_frameBuff) == 0:
-            raise ValueError("Frame buffer is empty")
-
-        hash = average_hash(Image.fromarray(_frameBuff))
+        hash = average_hash(Image.fromarray(__frameBuff))
         hashInt = int(str(hash), base=16)
 
-        self.hashArr = np.append(self.hashArr, hashInt)
+        self.state.hashArr = np.append(self.state.hashArr, hashInt)
+
         self.scatterPlotItem.setData(
-            x=np.arange(self.state.frameIndex)[-100:],
-            y=(self.hashArr)[-100:],
+            x=np.arange(__frameIdx - 1)[-100:],  # なぜか -1
+            y=__hashArr[-100:],
         )

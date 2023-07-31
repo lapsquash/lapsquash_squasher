@@ -2,10 +2,11 @@ import sys
 
 import cv2
 from PySide6.QtCore import QTimer
-from PySide6.QtWidgets import QApplication, QHBoxLayout, QWidget
+from PySide6.QtWidgets import QApplication, QHBoxLayout, QVBoxLayout, QWidget
 
 from squasher_py.helpers.state import State
 from squasher_py.helpers.widgets.camera import CameraWidget
+from squasher_py.helpers.widgets.data import DataWidget
 from squasher_py.helpers.widgets.hash import HashWidget
 
 
@@ -16,13 +17,15 @@ class MainWindow(QWidget):
 
         self.hashWidget = HashWidget(self.state)
         self.cameraWidget = CameraWidget(self.state)
+        self.dataWidget = DataWidget(self.state)
 
         self.setWindowTitle("Squasher")
 
-        layout = QHBoxLayout(self)
-
+        layout = QVBoxLayout(self)
         layout.addWidget(self.cameraWidget.get())
-        layout.addWidget(self.hashWidget.get())
+        hLayout = QHBoxLayout()
+        hLayout.addWidget(self.hashWidget.get())
+        layout.addLayout(hLayout)
 
         # Event loop
         timer = QTimer(self)
@@ -30,7 +33,10 @@ class MainWindow(QWidget):
         timer.start(int(1000 / self.state.FPS))
 
     def __update(self) -> None:
-        ret, frame = self.state.CAPTURE.read()
+        __state = self.state
+        __CAPTURE = __state.CAPTURE
+
+        ret, frame = __CAPTURE.read()
 
         if not ret:
             print("No frame captured")
@@ -39,8 +45,9 @@ class MainWindow(QWidget):
         self.state.frameIndex += 1
         self.state.frameBuff = frame
 
-        self.hashWidget.update()
         self.cameraWidget.update()
+        self.hashWidget.update()
+        self.dataWidget.update()
 
         if cv2.waitKey(1) & 0xFF == ord("q"):
             sys.exit()
