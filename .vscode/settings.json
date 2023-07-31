@@ -2,10 +2,12 @@
   "cSpell.words": [
     "APPDATA",
     "arange",
+    "dtype",
     "fromarray",
     "imagehash",
     "lapsquash",
     "lapsquasher",
+    "ndarray",
     "oclif",
     "pyqtgraph",
     "TRPC",
