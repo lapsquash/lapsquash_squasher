@@ -1,56 +1,72 @@
 import sys
+from os import path
+from pathlib import Path
 
 import cv2
 import pyqtgraph as pg
-from PyQt6.QtCore import QTimer
+from PySide6.QtCore import QTimer
+from PySide6.QtWidgets import QApplication, QVBoxLayout, QWidget
 
-CAPTURE = cv2.VideoCapture(0)
+CAPTURE = cv2.VideoCapture(path.join(Path.home(), "Downloads", "sample.mp4"))
+# CAPTURE = cv2.VideoCapture(0)
 FPS = CAPTURE.get(cv2.CAP_PROP_FPS)
 
-frame_index = 0
-image_item = pg.ImageItem()
+if not CAPTURE.isOpened():
+    raise IOError("Cannot open webcam")
 
 
-def update():
-    global image_item, frame_index
-    frame_index += 1
-    _, frame = CAPTURE.read()
-    print(f"{frame_index}\t{(frame_index/FPS):.2f}", end="\r")
-    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
+class MainWindow(QWidget):
+    frameIndex = 0
+    imageItem = pg.ImageItem()
 
-    image_item.setImage(frame)
+    def __init__(self) -> None:
+        super().__init__()
+        self.setWindowTitle("Squasher")
 
-    if cv2.waitKey(1) & 0xFF == ord("q"):
-        sys.exit()
-    pass
+        QVBoxLayout(self).addWidget(self.getCameraWidget())
 
+        # Event loop
+        timer = QTimer(self)
+        timer.timeout.connect(self.__update)
+        timer.start(int(1000 / FPS))
 
-def get_widget_camera():
-    camera = pg.ViewBox()
-    camera.addItem(image_item)
-    camera.setAspectLocked(True)
-    return pg.PlotItem(viewBox=camera)
+    def getCameraWidget(self) -> QWidget:
+        widget = pg.GraphicsLayoutWidget()
+        camera = pg.ViewBox()
+        camera.addItem(self.imageItem)
+        camera.setAspectLocked(True)
+        widget.addItem(pg.PlotItem(viewBox=camera))
+        return widget
 
+    def __update(self) -> None:
+        self.frameIndex += 1
+        ret, frame = CAPTURE.read()
 
-def get_win():
-    win = pg.GraphicsLayoutWidget()
+        if not ret:
+            print("No frame captured")
+            sys.exit()
 
-    win.addItem(get_widget_camera())
+        print(
+            f"{self.frameIndex}\t{(self.frameIndex/FPS):.2f}\t{FPS}",
+            end="\r",
+        )
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
 
-    return win
+        self.imageItem.setImage(frame)
+
+        if cv2.waitKey(1) & 0xFF == ord("q"):
+            sys.exit()
+        pass
 
 
 if __name__ == "__main__":
-    app = pg.mkQApp()
-    win = get_win()
-
-    timer = QTimer()
-    timer.timeout.connect(update)
-    timer.start()
-
+    app = QApplication()
+    win = MainWindow()
     win.show()
+
     app.exec()
 
+    # dispose
     CAPTURE.release()
     sys.exit()

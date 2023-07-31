@@ -7,13 +7,12 @@ readme = "README.md"
 packages = [{ include = "squasher_py" }]
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "3.11.2"
 black = "^23.7.0"
 ultralytics = "^8.0.142"
 imagehash = "^4.3.1"
-pyqt6 = "^6.5.2"
 pyqtgraph = "^0.13.3"
-
+pyside6 = "^6.5.2"
 
 [build-system]
 requires = ["poetry-core"]
