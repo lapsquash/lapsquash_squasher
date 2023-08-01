@@ -26,10 +26,14 @@ class MainWindow(QWidget):
         hLayout = QHBoxLayout()
         hLayout.addWidget(self.hashWidget.get())
         layout.addLayout(hLayout)
+        layout.addWidget(self.dataWidget.get())
 
         # Event loop
         timer = QTimer(self)
-        timer.timeout.connect(self.__update)
+
+        # SHOULD use lambda when using timer.timeout.connect
+        # ref: https://qiita.com/Kanahiro/items/8075546b2fea0b6baf5d
+        timer.timeout.connect(lambda: self.__update())
         timer.start(int(1000 / self.state.FPS))
 
     def __update(self) -> None:
@@ -45,9 +49,13 @@ class MainWindow(QWidget):
         self.state.frameIndex += 1
         self.state.frameBuff = frame
 
-        self.cameraWidget.update()
-        self.hashWidget.update()
-        self.dataWidget.update()
+        try:
+            self.cameraWidget.update()
+            self.hashWidget.update()
+            self.dataWidget.update()
+        except Exception as e:
+            print(e)
+            sys.exit()
 
         if cv2.waitKey(1) & 0xFF == ord("q"):
             sys.exit()

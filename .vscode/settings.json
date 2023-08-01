@@ -11,11 +11,16 @@
     "oclif",
     "pyqtgraph",
     "TRPC",
+    "UDEV",
     "YOLO"
   ],
-  "python.defaultInterpreterPath": "${workspaceFolder}/squasher_py/.venv/Scripts/python.exe",
+  "python.defaultInterpreterPath": "${workspaceFolder}/squasher_py/.venv/bin/python",
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
   },
-  "python.formatting.provider": "none"
+  "python.formatting.provider": "none",
+
+  "files.exclude": {
+    "**/__pycache__": true
+  }
 }
