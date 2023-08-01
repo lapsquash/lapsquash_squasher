@@ -14,5 +14,5 @@ class Model(EventLoop, metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def dispose(self) -> None:
+    def __del__(self) -> None:
         pass

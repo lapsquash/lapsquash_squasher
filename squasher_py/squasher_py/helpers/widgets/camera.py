@@ -1,3 +1,5 @@
+# type: ignore
+
 import cv2
 import pyqtgraph as pg
 from PySide6.QtWidgets import QWidget
@@ -24,11 +26,6 @@ class CameraWidget(Widget):
     def update(self) -> None:
         __state = self.state
         __frameBuff = __state.frameBuff
-
-        print(
-            f"{self.state.frameIndex}\t{(self.state.frameIndex/self.state.FPS):.2f}",  # noqa
-            end="\r",
-        )
 
         # BGR -> RGB
         __frameBuff = cv2.cvtColor(__frameBuff, cv2.COLOR_BGR2RGB)

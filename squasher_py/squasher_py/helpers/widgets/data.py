@@ -28,6 +28,11 @@ class DataWidget(Widget):
         __hashArr = __state.hashArr
 
         hash = __hashArr[-1]
+        data = [
+            f"#{__frameIdx}",
+            f"{(__frameIdx/__FPS):.2f}s",
+            f"0x{int(hash):016X}",
+            str(int(hash)),
+        ]
 
-        data = f"#{__frameIdx}\t{(__frameIdx/__FPS):.2f}s\t0x{int(hash):016X}\t{int(hash)}"  # noqa
-        self.label.setText(data)
+        self.label.setText("\t".join(data))

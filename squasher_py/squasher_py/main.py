@@ -8,6 +8,8 @@ from squasher_py.helpers.state import State
 from squasher_py.helpers.widgets.camera import CameraWidget
 from squasher_py.helpers.widgets.data import DataWidget
 from squasher_py.helpers.widgets.hash import HashWidget
+from squasher_py.model.camera import CaptureModel
+from squasher_py.model.hash import HashModel
 from squasher_py.model.log import LogModel
 
 
@@ -16,13 +18,26 @@ class MainWindow(QWidget):
         super().__init__()
         self.state = state
 
+        self.__defineModelOrWidget()
+        self.__defineLayout()
+        self.__defineEventLoop()
+
+    def __defineModelOrWidget(self) -> None:
+        # Instantiate models
+        self.captureModel = CaptureModel(self.state)
+        self.logModel = LogModel(self.state)
+        self.hashModel = HashModel(self.state)
+
+        # Instantiate widgets
         self.hashWidget = HashWidget(self.state)
         self.cameraWidget = CameraWidget(self.state)
         self.dataWidget = DataWidget(self.state)
-        self.logModel = LogModel(self.state)
 
+    def __defineLayout(self) -> None:
+        # Set config for window
         self.setWindowTitle("Squasher")
 
+        # Set layout
         layout = QVBoxLayout(self)
         layout.addWidget(self.cameraWidget.get())
         hLayout = QHBoxLayout()
@@ -30,32 +45,24 @@ class MainWindow(QWidget):
         layout.addLayout(hLayout)
         layout.addWidget(self.dataWidget.get())
 
+    def __defineEventLoop(self) -> None:
         # Event loop
         timer = QTimer(self)
-
         # SHOULD use lambda when using timer.timeout.connect
         # ref: https://qiita.com/Kanahiro/items/8075546b2fea0b6baf5d
         timer.timeout.connect(lambda: self.__update())
         timer.start(int(1000 / self.state.FPS))
 
     def __update(self) -> None:
-        __state = self.state
-        __CAPTURE = __state.CAPTURE
-
-        ret, frame = __CAPTURE.read()
-
-        if not ret:
-            print("No frame captured")
-            sys.exit()
-
-        self.state.frameIndex += 1
-        self.state.frameBuff = frame
-
+        # This method is called every frame
         try:
+            self.captureModel.update()
+            self.hashModel.update()
+            self.logModel.update()
             self.cameraWidget.update()
             self.hashWidget.update()
             self.dataWidget.update()
-            self.logModel.update()
+
         except Exception as e:
             print(e)
             sys.exit()
@@ -63,6 +70,12 @@ class MainWindow(QWidget):
         if cv2.waitKey(1) & 0xFF == ord("q"):
             sys.exit()
         pass
+
+    def __del__(self) -> None:
+        print("\ndispose")
+        del self.captureModel
+        del self.logModel
+        del self.hashModel
 
 
 if __name__ == "__main__":
@@ -75,6 +88,5 @@ if __name__ == "__main__":
     app.exec()
 
     # dispose
-    # FIXME: 絶対呼ばれている気がしない
-    del state
+    del win
     sys.exit()

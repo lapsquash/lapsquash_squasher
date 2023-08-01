@@ -1,7 +1,7 @@
+# type: ignore
+
 import numpy as np
 import pyqtgraph as pg
-from imagehash import average_hash
-from PIL import Image
 from PySide6.QtWidgets import QWidget
 
 from squasher_py.helpers.interfaces.widget import Widget
@@ -34,9 +34,6 @@ class HashWidget(Widget):
         self.widePlotItem.setLabel("bottom", "Frame")
         self.widePlotItem.setMouseEnabled(x=True, y=True)
         self.widePlotItem.setYRange(0, 0xFFFFFFFFFFFFFFFF)
-        # self.widePlotItem.sigXRangeChanged.connect(
-        #     lambda: self.__onXRangeChanged(),
-        # )
 
         self.narrowPlotItem.showGrid(x=True, y=True)
         self.narrowPlotItem.setTitle("Hash")
@@ -49,37 +46,17 @@ class HashWidget(Widget):
         widget.addItem(self.narrowPlotItem, 0, 1)
         return widget
 
-    # def __onRegionChanged(self) -> None:
-    #     self.narrowPlotItem.setXRange(
-    #         *self.wideLineRegionItem.getRegion(),
-    #         padding=0,
-    #     )
-    #     self.narrowPlotItem.setYRange(0, 2**64)
-
-    # def __onXRangeChanged(self) -> None:
-    #     viewBox = self.narrowPlotItem.getViewBox()
-    #     if viewBox is None:
-    #         return
-    #     self.wideLineRegionItem.setRegion(viewBox.viewRange()[0])
-    #     self.narrowPlotItem.setYRange(0, 0xFFFFFFFFFFFFFFFF)
-
     def update(self) -> None:
         __state = self.state
-        __frameBuff = __state.frameBuff
         __frameIdx = __state.frameIndex
         __hashArr = __state.hashArr
 
-        hash = average_hash(Image.fromarray(__frameBuff))
-        hashInt = int(str(hash), base=16)
-
-        self.state.hashArr = np.append(self.state.hashArr, hashInt)
-
         self.wideScatterPlotItem.setData(
-            x=np.arange(__frameIdx - 1),  # なぜか -1
+            x=np.arange(__frameIdx),
             y=__hashArr,
         )
 
         self.narrowScatterPlotItem.setData(
-            x=np.arange(__frameIdx - 1)[-50:],  # なぜか -1
+            x=np.arange(__frameIdx)[-50:],
             y=__hashArr[-50:],
         )
