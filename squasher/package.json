@@ -20,7 +20,6 @@
     "/oclif.manifest.json"
   ],
   "scripts": {
-    "prepare": "poetry install",
     "dev": "./bin/dev",
     "build": "shx rm -rf dist && tsc -b",
     "lint": "eslint --fix",

@@ -5,12 +5,13 @@
   "private": true,
   "scripts": {
     "poetry": "cd squasher_py && poetry",
+    "prepare": "yarn poetry install",
     "dev": "yarn workspace @lapsquash/squasher run dev",
     "dev:py": "yarn poetry run python ./squasher_py/main.py",
     "dev:analyzer": "yarn workspace @lapsquash/analyzer run dev",
     "test:analyzer": "yarn workspace @lapsquash/analyzer run test",
     "build": "yarn workspace @lapsquash/squasher run build",
-    "prepare": "yarn poetry install"
+    "examples:py": "yarn poetry run python ./squasher_py/helpers/examples.py"
   },
   "workspaces": {
     "packages": [
