@@ -8,6 +8,7 @@ from squasher_py.helpers.state import State
 from squasher_py.helpers.widgets.camera import CameraWidget
 from squasher_py.helpers.widgets.data import DataWidget
 from squasher_py.helpers.widgets.hash import HashWidget
+from squasher_py.model.log import LogModel
 
 
 class MainWindow(QWidget):
@@ -18,6 +19,7 @@ class MainWindow(QWidget):
         self.hashWidget = HashWidget(self.state)
         self.cameraWidget = CameraWidget(self.state)
         self.dataWidget = DataWidget(self.state)
+        self.logModel = LogModel(self.state)
 
         self.setWindowTitle("Squasher")
 
@@ -53,6 +55,7 @@ class MainWindow(QWidget):
             self.cameraWidget.update()
             self.hashWidget.update()
             self.dataWidget.update()
+            self.logModel.update()
         except Exception as e:
             print(e)
             sys.exit()

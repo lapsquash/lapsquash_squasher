@@ -30,5 +30,4 @@ class DataWidget(Widget):
         hash = __hashArr[-1]
 
         data = f"#{__frameIdx}\t{(__frameIdx/__FPS):.2f}s\t0x{int(hash):016X}\t{int(hash)}"  # noqa
-        print(data, end="\r")
         self.label.setText(data)
