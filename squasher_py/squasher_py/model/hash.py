@@ -1,5 +1,6 @@
 import numpy as np
-from imagehash import average_hash  # type: ignore
+import pandas as pd
+from imagehash import dhash  # type: ignore
 from PIL import Image
 
 from squasher_py.helpers.constants import LOG_PATH
@@ -11,6 +12,12 @@ class HashModel(Model):
     def __init__(self, state: State) -> None:
         super().__init__(state)
         self.state = state
+
+    def __computeEMA(
+        self,
+        arr: np.ndarray[float, np.dtype[np.float64]],
+    ) -> float:
+        return pd.Series(arr).ewm(span=10).mean().values[-1]  # type: ignore
 
     def __on_unit_time(self) -> None:
         __state = self.state
@@ -25,7 +32,18 @@ class HashModel(Model):
 
         [slope, _] = np.polyfit(frame, hash, 1)
         self.state.slopeArr = np.append(self.state.slopeArr, abs(slope))
+        self.state.slopeThresholdArr = np.append(
+            self.state.slopeThresholdArr,
+            self.__computeEMA(
+                self.state.slopeArr,
+            ),
+        )
 
+        __slopeArr = self.state.slopeArr
+        __slopeThresholdArr = self.state.slopeThresholdArr
+
+        if __slopeArr[-1] > __slopeThresholdArr[-1]:
+            print(f"{__slopeArr[-1] } > {__slopeThresholdArr[-1]}")
         data = "\t".join(
             [
                 f"#{__frameIdx - int(__FPS)}..#{__frameIdx}",
@@ -41,7 +59,7 @@ class HashModel(Model):
         __frameBuff = __state.frameBuff
         __frameIdx = __state.frameIndex
 
-        hash = average_hash(Image.fromarray(__frameBuff))  # type: ignore
+        hash = dhash(Image.fromarray(__frameBuff))  # type: ignore
         hashInt = int(str(hash), base=16)
 
         self.state.hashArr = np.append(self.state.hashArr, hashInt)
