@@ -15,6 +15,9 @@ class HashWidget(Widget):
     narrowPlotItem: pg.PlotItem
     narrowScatterPlotItem = pg.PlotCurveItem()
 
+    slopePlotItem: pg.PlotCurveItem
+    slopeScatterPlotItem = pg.ScatterPlotItem()
+
     def __init__(self, state: State) -> None:
         self.state = state
 
@@ -22,10 +25,11 @@ class HashWidget(Widget):
         widget = pg.GraphicsLayoutWidget()
         self.widePlotItem = pg.PlotItem()
         self.narrowPlotItem = pg.PlotItem()
+        self.slopePlotItem = pg.PlotItem()
 
         self.widePlotItem.addItem(self.wideScatterPlotItem)
-
         self.narrowPlotItem.addItem(self.narrowScatterPlotItem)
+        self.slopePlotItem.addItem(self.slopeScatterPlotItem)
 
         # config
         self.widePlotItem.showGrid(x=True, y=True)
@@ -42,14 +46,22 @@ class HashWidget(Widget):
         self.narrowPlotItem.setMouseEnabled(x=True, y=True)
         self.narrowPlotItem.setYRange(0, 0xFFFFFFFFFFFFFFFF)
 
+        self.slopePlotItem.showGrid(x=True, y=True)
+        self.slopePlotItem.setTitle("hash slope")
+        self.slopePlotItem.setLabel("left", "Hash")
+        self.slopePlotItem.setLabel("bottom", "Frame")
+        self.slopePlotItem.setMouseEnabled(x=True, y=True)
+
         widget.addItem(self.widePlotItem, 0, 0)
         widget.addItem(self.narrowPlotItem, 0, 1)
+        widget.addItem(self.slopePlotItem, 1, 0, 1, 2)
         return widget
 
     def update(self) -> None:
         __state = self.state
         __frameIdx = __state.frameIndex
         __hashArr = __state.hashArr
+        __FPS = __state.FPS
 
         self.wideScatterPlotItem.setData(
             x=np.arange(__frameIdx),
@@ -59,4 +71,9 @@ class HashWidget(Widget):
         self.narrowScatterPlotItem.setData(
             x=np.arange(__frameIdx)[-50:],
             y=__hashArr[-50:],
+        )
+
+        self.slopeScatterPlotItem.setData(
+            x=np.arange(int(__frameIdx / int(__FPS))),
+            y=__state.slopeArr,
         )

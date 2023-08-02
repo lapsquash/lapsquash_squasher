@@ -11,5 +11,9 @@ OUTPUT_DIR = path.join(path.dirname(squasher_py.__file__), "..", "out")
 LOG_DIR = path.join(OUTPUT_DIR, "logs")
 LOG_PATH = path.join(LOG_DIR, f"{__now_str}.log")
 
-CAPTURE_RESOURCE: int | str = path.join(Path.home(), "Downloads", "sample.mp4")
+CAPTURE_RESOURCE: int | str = path.join(
+    Path.home(),
+    "Downloads",
+    "videoplayback.mp4",
+)
 # CAPTURE_RESOURCE: int | str = 0

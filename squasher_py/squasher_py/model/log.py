@@ -19,6 +19,8 @@ class LogModel(Model):
         __FPS = __state.FPS
         __hashArr = __state.hashArr
 
+        return
+
         hash = __hashArr[-1]
         data = f"{__FPS:.2f}\t0x{int(hash):016X}"
 

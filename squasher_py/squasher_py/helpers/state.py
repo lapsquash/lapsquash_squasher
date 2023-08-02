@@ -27,6 +27,7 @@ class StateData:
     """
     frameBuff: np.ndarray[Tuple[int, int, int], np.dtype[np.uint8]]
     hashArr: np.ndarray[int, np.dtype[np.uint64]]
+    slopeArr: np.ndarray[float, np.dtype[np.float64]]
 
 
 class State(StateData):
@@ -34,3 +35,4 @@ class State(StateData):
         self.frameIndex: int = 0
         self.frameBuff = np.array([], dtype=np.uint8)
         self.hashArr = np.array([], dtype=np.uint64)
+        self.slopeArr = np.array([], dtype=np.float64)

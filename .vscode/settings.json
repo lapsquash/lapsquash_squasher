@@ -9,6 +9,7 @@
     "lapsquasher",
     "ndarray",
     "oclif",
+    "polyfit",
     "pyqtgraph",
     "TRPC",
     "UDEV",
