@@ -17,6 +17,7 @@ class HashWidget(Widget):
 
     slopePlotItem: pg.PlotCurveItem
     slopeScatterPlotItem = pg.ScatterPlotItem()
+    slopeThresholdPlotItem = pg.PlotCurveItem()
 
     def __init__(self, state: State) -> None:
         self.state = state
@@ -30,6 +31,7 @@ class HashWidget(Widget):
         self.widePlotItem.addItem(self.wideScatterPlotItem)
         self.narrowPlotItem.addItem(self.narrowScatterPlotItem)
         self.slopePlotItem.addItem(self.slopeScatterPlotItem)
+        self.slopePlotItem.addItem(self.slopeThresholdPlotItem)
 
         # config
         self.widePlotItem.showGrid(x=True, y=True)
@@ -62,6 +64,8 @@ class HashWidget(Widget):
         __frameIdx = __state.frameIndex
         __hashArr = __state.hashArr
         __FPS = __state.FPS
+        __slopeArr = __state.slopeArr
+        __slopeThresholdArr = __state.slopeThresholdArr
 
         self.wideScatterPlotItem.setData(
             x=np.arange(__frameIdx),
@@ -75,5 +79,13 @@ class HashWidget(Widget):
 
         self.slopeScatterPlotItem.setData(
             x=np.arange(int(__frameIdx / int(__FPS))),
-            y=__state.slopeArr,
+            y=__slopeArr,
+            symbol="x",
+            pen="y",
+        )
+
+        self.slopeThresholdPlotItem.setData(
+            x=np.arange(int(__frameIdx / int(__FPS))),
+            y=__slopeThresholdArr,
+            pen="r",
         )

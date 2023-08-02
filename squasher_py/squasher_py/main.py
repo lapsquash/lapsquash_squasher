@@ -38,12 +38,14 @@ class MainWindow(QWidget):
         self.setWindowTitle("Squasher")
 
         # Set layout
-        layout = QVBoxLayout(self)
-        layout.addWidget(self.cameraWidget.get())
-        hLayout = QHBoxLayout()
+        hLayout = QHBoxLayout(self)
+
+        vLayout = QVBoxLayout()
+        vLayout.addWidget(self.cameraWidget.get())
+        vLayout.addWidget(self.dataWidget.get())
+
+        hLayout.addLayout(vLayout)
         hLayout.addWidget(self.hashWidget.get())
-        layout.addLayout(hLayout)
-        layout.addWidget(self.dataWidget.get())
 
     def __defineEventLoop(self) -> None:
         # Event loop
@@ -64,8 +66,7 @@ class MainWindow(QWidget):
             self.dataWidget.update()
 
         except Exception as e:
-            print(e)
-            sys.exit()
+            raise e
 
         if cv2.waitKey(1) & 0xFF == ord("q"):
             sys.exit()
