@@ -17,7 +17,7 @@ class DataWidget(Widget):
         self.label.setStyleSheet(
             """
             font-family: 'UDEV Gothic 35NF';
-            font-size: 18px;
+            color: #fff;
             """,
         )
         return self.label

@@ -17,3 +17,6 @@ CAPTURE_RESOURCE: int | str = path.join(
     "videoplayback.mp4",
 )
 # CAPTURE_RESOURCE: int | str = 0
+
+SLOPE_THRESHOLD_MIN = 200
+SLOPE_THRESHOLD_MAX = 2**60

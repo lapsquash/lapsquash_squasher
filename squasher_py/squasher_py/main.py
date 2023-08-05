@@ -1,7 +1,7 @@
 import sys
 
 import cv2
-from PySide6.QtCore import QTimer
+from PySide6.QtCore import Qt, QTimer
 from PySide6.QtWidgets import QApplication, QHBoxLayout, QVBoxLayout, QWidget
 
 from squasher_py.helpers.state import State
@@ -36,23 +36,41 @@ class MainWindow(QWidget):
     def __defineLayout(self) -> None:
         # Set config for window
         self.setWindowTitle("Squasher")
+        self.setStyleSheet("background-color: #000")
+
+        # Set widget
+        cameraWidget = self.cameraWidget.get()
+        dataWidget = self.dataWidget.get()
+        hashWidget = self.hashWidget.get()
 
         # Set layout
         hLayout = QHBoxLayout(self)
+        left = QVBoxLayout()
+        right = QVBoxLayout()
 
-        vLayout = QVBoxLayout()
-        vLayout.addWidget(self.cameraWidget.get())
-        vLayout.addWidget(self.dataWidget.get())
+        left.addWidget(
+            cameraWidget,
+            stretch=2,
+        )
+        left.addWidget(
+            dataWidget,
+            stretch=3,
+            alignment=Qt.AlignmentFlag.AlignTop,
+        )
 
-        hLayout.addLayout(vLayout)
-        hLayout.addWidget(self.hashWidget.get())
+        right.addWidget(hashWidget)
+
+        hLayout.addLayout(left, 1)
+        hLayout.addLayout(right, 2)
 
     def __defineEventLoop(self) -> None:
         # Event loop
         timer = QTimer(self)
+
         # SHOULD use lambda when using timer.timeout.connect
         # ref: https://qiita.com/Kanahiro/items/8075546b2fea0b6baf5d
         timer.timeout.connect(lambda: self.__update())
+
         timer.start(int(1000 / self.state.FPS))
 
     def __update(self) -> None:
