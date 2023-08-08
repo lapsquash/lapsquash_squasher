@@ -8,7 +8,7 @@ from squasher_py.helpers.state import State
 from squasher_py.helpers.widgets.camera import CameraWidget
 from squasher_py.helpers.widgets.data import DataWidget
 from squasher_py.helpers.widgets.hash import HashWidget
-from squasher_py.model.camera import CaptureModel
+from squasher_py.model.capture import CaptureModel
 from squasher_py.model.hash import HashModel
 from squasher_py.model.log import LogModel
 

@@ -3,7 +3,11 @@ import pandas as pd
 from imagehash import dhash  # type: ignore
 from PIL import Image
 
-from squasher_py.helpers.constants import LOG_PATH
+from squasher_py.helpers.constants import (
+    LOG_PATH,
+    SLOPE_THRESHOLD_MAX,
+    SLOPE_THRESHOLD_MIN,
+)
 from squasher_py.helpers.interfaces.model import Model
 from squasher_py.helpers.state import State
 
@@ -13,8 +17,19 @@ class HashModel(Model):
         super().__init__(state)
         self.state = state
 
-    def __computeEMA(
-        self,
+    @staticmethod
+    def applyFilter2ThresholdSlope(data: float) -> float:
+        print(
+            f"{SLOPE_THRESHOLD_MIN} < {data} < {SLOPE_THRESHOLD_MAX}",
+            end=" -> ",
+        )
+        data = max(data, SLOPE_THRESHOLD_MIN)
+        data = min(data, SLOPE_THRESHOLD_MAX)
+        print(data, end="\r")
+        return data
+
+    @staticmethod
+    def computeEMA(
         arr: np.ndarray[float, np.dtype[np.float64]],
     ) -> float:
         return pd.Series(arr).ewm(span=10).mean().values[-1]  # type: ignore
@@ -34,7 +49,7 @@ class HashModel(Model):
         self.state.slopeArr = np.append(self.state.slopeArr, abs(slope))
         self.state.slopeThresholdArr = np.append(
             self.state.slopeThresholdArr,
-            self.__computeEMA(
+            self.computeEMA(
                 self.state.slopeArr,
             ),
         )
