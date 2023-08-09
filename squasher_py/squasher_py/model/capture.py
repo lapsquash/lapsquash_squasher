@@ -17,8 +17,8 @@ class CaptureModel(Model):
             raise IOError("Cannot open")
 
     def update(self) -> None:
-        __state = self.state
-        __CAPTURE = __state.CAPTURE
+        state = self.state
+        __CAPTURE = state.CAPTURE
 
         ret, frame = __CAPTURE.read()  # type: ignore
 

@@ -94,12 +94,12 @@ class HashWidget(Widget):
         return widget
 
     def update(self) -> None:
-        __state = self.state
-        __frameIdx = __state.frameIndex
-        __hashArr = __state.hashArr
-        __FPS = __state.FPS
-        __slopeArr = __state.slopeArr
-        __slopeThresholdArr = __state.slopeThresholdArr
+        state = self.state
+        __frameIdx = state.frameIndex
+        __hashArr = state.hashArr
+        __FPS = state.FPS
+        __slopeArr = state.slopeArr
+        __slopeThresholdArr = state.slopeThresholdArr
 
         secRange = np.arange(int(__frameIdx / int(__FPS)))
 

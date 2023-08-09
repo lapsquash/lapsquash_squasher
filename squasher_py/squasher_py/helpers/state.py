@@ -4,6 +4,16 @@ from typing import Tuple
 import cv2
 import numpy as np
 
+TypeFrame = Tuple[int, int, int]  # RGB
+TypeHash = int
+TypeSlope = float
+TypeSlopeThreshold = float
+
+TypeFrameBuff = np.ndarray[TypeFrame, np.dtype[np.uint8]]
+TypeHashArr = np.ndarray[TypeHash, np.dtype[np.uint64]]
+TypeSlopeArr = np.ndarray[TypeSlope, np.dtype[np.float64]]
+TypeSlopeThresholdArr = np.ndarray[TypeSlopeThreshold, np.dtype[np.float64]]
+
 
 @dataclass
 class StateData:
@@ -14,6 +24,7 @@ class StateData:
     frameBuff =
       [
         [
+        #   R   G   B
           [ 20  13   5]
           [ 21  14   6]
           [ 34  22   8]
@@ -25,10 +36,10 @@ class StateData:
           ...
       ]
     """
-    frameBuff: np.ndarray[Tuple[int, int, int], np.dtype[np.uint8]]
-    hashArr: np.ndarray[int, np.dtype[np.uint64]]
-    slopeArr: np.ndarray[float, np.dtype[np.float64]]
-    slopeThresholdArr: np.ndarray[float, np.dtype[np.float64]]
+    frameBuff: TypeFrameBuff
+    hashArr: TypeHashArr
+    slopeArr: TypeSlopeArr
+    slopeThresholdArr: TypeSlopeThresholdArr
 
 
 class State(StateData):

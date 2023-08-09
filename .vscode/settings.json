@@ -4,6 +4,7 @@
     "arange",
     "dhash",
     "dtype",
+    "fourcc",
     "fromarray",
     "imagehash",
     "lapsquash",

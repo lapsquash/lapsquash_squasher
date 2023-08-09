@@ -11,6 +11,7 @@ from squasher_py.helpers.widgets.hash import HashWidget
 from squasher_py.model.capture import CaptureModel
 from squasher_py.model.hash import HashModel
 from squasher_py.model.log import LogModel
+from squasher_py.model.output import OutputModel
 
 
 class MainWindow(QWidget):
@@ -27,6 +28,7 @@ class MainWindow(QWidget):
         self.captureModel = CaptureModel(self.state)
         self.logModel = LogModel(self.state)
         self.hashModel = HashModel(self.state)
+        self.outputModel = OutputModel(self.state)
 
         # Instantiate widgets
         self.hashWidget = HashWidget(self.state)
@@ -79,6 +81,8 @@ class MainWindow(QWidget):
             self.captureModel.update()
             self.hashModel.update()
             self.logModel.update()
+            self.outputModel.update()
+
             self.cameraWidget.update()
             self.hashWidget.update()
             self.dataWidget.update()

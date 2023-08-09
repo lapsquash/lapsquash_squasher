@@ -24,8 +24,8 @@ class CameraWidget(Widget):
         return widget
 
     def update(self) -> None:
-        __state = self.state
-        __frameBuff = __state.frameBuff
+        state = self.state
+        __frameBuff = state.frameBuff
 
         # BGR -> RGB
         __frameBuff = cv2.cvtColor(__frameBuff, cv2.COLOR_BGR2RGB)

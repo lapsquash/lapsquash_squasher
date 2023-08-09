@@ -23,12 +23,12 @@ class DataWidget(Widget):
         return self.label
 
     def update(self) -> None:
-        __state = self.state
-        __FPS = __state.FPS
-        __frameIdx = __state.frameIndex
-        __hashArr = __state.hashArr
-        __slopeArr = __state.slopeArr
-        __slopeThresholdArr = __state.slopeThresholdArr
+        state = self.state
+        __FPS = state.FPS
+        __frameIdx = state.frameIndex
+        __hashArr = state.hashArr
+        __slopeArr = state.slopeArr
+        __slopeThresholdArr = state.slopeThresholdArr
 
         # slop init (< 1s)
         if len(__slopeArr) == 0:
