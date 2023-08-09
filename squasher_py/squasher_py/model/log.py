@@ -14,18 +14,36 @@ class LogModel(Model):
             print("Creating output directory...")
             makedirs(LOG_DIR, exist_ok=True)
 
-    def update(self) -> None:
-        __state = self.state
-        __FPS = __state.FPS
-        __hashArr = __state.hashArr
-
-        return
-
-        hash = __hashArr[-1]
-        data = f"{__FPS:.2f}\t0x{int(hash):016X}"
-
+    def __writeLog(self, data: str) -> None:
         with open(LOG_PATH, "a") as file:
             file.write(data + "\n")
 
+    def __on_unit_time(self) -> None:
+        state = self.state
+        __FPS = state.FPS
+        __frameIdx = state.frameIndex
+
+        __slopeArr = state.slopeArr
+        __slopeThresholdArr = state.slopeThresholdArr
+
+        data = "\t".join(
+            [
+                f"#{__frameIdx - int(__FPS)}..#{__frameIdx}",
+                f"| {(__slopeArr[-1]):.2f}",
+                f"| {(__slopeThresholdArr[-1]):.2f}",
+            ]
+        )
+
+        self.__writeLog(data)
+
+    def update(self) -> None:
+        state = self.state
+        __FPS = state.FPS
+        __frameIdx = state.frameIndex
+
+        # On every second
+        if __frameIdx % int(__FPS) == 0:
+            self.__on_unit_time()
+
     def __del__(self) -> None:
-        pass
+        return

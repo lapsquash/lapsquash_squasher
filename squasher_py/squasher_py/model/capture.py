@@ -31,4 +31,4 @@ class CaptureModel(Model):
     def __del__(self) -> None:
         print("Releasing capture...")
         self.state.CAPTURE.release()
-        pass
+        return

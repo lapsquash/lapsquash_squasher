@@ -9,12 +9,12 @@ from squasher_py.helpers.state import State
 class Widget(EventLoop, metaclass=ABCMeta):
     @abstractmethod
     def __init__(self, state: State) -> None:
-        pass
+        return
 
     @abstractmethod
     def get(self) -> QWidget:
-        pass
+        return
 
     @abstractmethod
     def update(self) -> None:
-        pass
+        return

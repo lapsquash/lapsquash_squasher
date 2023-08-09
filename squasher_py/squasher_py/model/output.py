@@ -9,8 +9,9 @@ from squasher_py.helpers.state import State, TypeFrameBuff
 
 
 class OutputModel(Model):
-    threadPool = ThreadPoolExecutor()
+    threadPool = ThreadPoolExecutor(max_workers=1000)
     writer: VideoWriter | None = None
+    latestClippingRangeArrLength: int = 0
 
     def __init__(self, state: State) -> None:
         super().__init__(state)
@@ -28,34 +29,46 @@ class OutputModel(Model):
         print(f"#{frameIdx} Writing frame...", end="\r")
         self.writer.write(frame)  # type: ignore
 
+    def __on_unit_time(self) -> None:
+        return
+
     def update(self) -> None:
         state = self.state
         __frameBuff = state.frameBuff
         __frameIdx = state.frameIndex
         __FPS = state.FPS
         __frameBuff = state.frameBuff
+        __clippingRangeArr = state.clippingRangeArr
 
+        clippingRangeArrLen = len(__clippingRangeArr)
+        clippingIdx = clippingRangeArrLen - 1
         height, width, _ = __frameBuff.shape
 
-        # Initialize writer (only once)
-        if self.writer is None:
+        if clippingRangeArrLen != self.latestClippingRangeArrLength:
+            print(f"{clippingIdx}.mp4: Creating output...")
             MP4_CODEC = 0x00000020
             self.writer = VideoWriter(
-                getOutputSplitPath(1),
+                getOutputSplitPath(clippingIdx),
                 MP4_CODEC,
                 __FPS,
                 (width, height),
             )
+            self.latestClippingRangeArrLength = clippingRangeArrLen
 
-        self.threadPool.submit(
-            lambda: self.__writeFrame(
-                __frameBuff,
-                __frameIdx,
+        if clippingRangeArrLen != 0 and __clippingRangeArr[-1].end is None:
+            self.threadPool.submit(
+                lambda: self.__writeFrame(
+                    __frameBuff,
+                    __frameIdx,
+                )
             )
-        )
+
+        # On every second
+        if __frameIdx % int(__FPS) == 0:
+            self.__on_unit_time()
 
     def __del__(self) -> None:
         print("Releasing output...")
         self.threadPool.shutdown(wait=True)
         print("Output released!")
-        pass
+        return

@@ -7,12 +7,12 @@ from squasher_py.helpers.state import State
 class Model(EventLoop, metaclass=ABCMeta):
     @abstractmethod
     def __init__(self, state: State) -> None:
-        pass
+        return
 
     @abstractmethod
     def update(self) -> None:
-        pass
+        return
 
     @abstractmethod
     def __del__(self) -> None:
-        pass
+        return

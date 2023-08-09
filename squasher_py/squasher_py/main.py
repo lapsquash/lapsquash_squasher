@@ -92,7 +92,7 @@ class MainWindow(QWidget):
 
         if cv2.waitKey(1) & 0xFF == ord("q"):
             sys.exit()
-        pass
+        return
 
     def __del__(self) -> None:
         print("\ndispose")
