@@ -21,13 +21,16 @@
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
   },
-  "python.formatting.provider": "none",
-
   "files.exclude": {
     "**/__pycache__": true
   },
   "python.analysis.diagnosticSeverityOverrides": {
     "reportMissingTypeStubs": "none"
   },
-  "python.analysis.typeCheckingMode": "strict"
+  "python.analysis.typeCheckingMode": "strict",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll": true,
+    "source.organizeImports": true
+  }
 }

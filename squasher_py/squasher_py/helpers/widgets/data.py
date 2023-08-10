@@ -30,9 +30,9 @@ class DataWidget(Widget):
         __slopeArr = state.slopeArr
         __slopeThresholdArr = state.slopeThresholdArr
 
-        # slop init (< 1s)
+        # < 1s のときの表示
         if len(__slopeArr) == 0:
-            self.label.setText("__\n\n\n")
+            self.label.setText("__")
             return
 
         hash = __hashArr[-1]

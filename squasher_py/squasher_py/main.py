@@ -24,28 +24,27 @@ class MainWindow(QWidget):
         self.__defineEventLoop()
 
     def __defineModelOrWidget(self) -> None:
-        # Instantiate models
+        # Model の初期化
         self.captureModel = CaptureModel(self.state)
         self.logModel = LogModel(self.state)
         self.hashModel = HashModel(self.state)
         self.outputModel = OutputModel(self.state)
 
-        # Instantiate widgets
+        # Widget の初期化
         self.hashWidget = HashWidget(self.state)
         self.cameraWidget = CameraWidget(self.state)
         self.dataWidget = DataWidget(self.state)
 
     def __defineLayout(self) -> None:
-        # Set config for window
+        # Window の設定
         self.setWindowTitle("Squasher")
         self.setStyleSheet("background-color: #000")
 
-        # Set widget
         cameraWidget = self.cameraWidget.get()
         dataWidget = self.dataWidget.get()
         hashWidget = self.hashWidget.get()
 
-        # Set layout
+        # レイアウトの設定
         hLayout = QHBoxLayout(self)
         left = QVBoxLayout()
         right = QVBoxLayout()
@@ -66,23 +65,24 @@ class MainWindow(QWidget):
         hLayout.addLayout(right, 2)
 
     def __defineEventLoop(self) -> None:
-        # Event loop
         timer = QTimer(self)
 
-        # SHOULD use lambda when using timer.timeout.connect
+        # SHOULD: `timer.timeout.connect` のときは lambda を使う
         # ref: https://qiita.com/Kanahiro/items/8075546b2fea0b6baf5d
         timer.timeout.connect(lambda: self.__update())
 
         timer.start(int(1000 / self.state.FPS))
 
     def __update(self) -> None:
-        # This method is called every frame
+        """イベントループ"""
         try:
+            # MUST: capture は必ず最初
             self.captureModel.update()
             self.hashModel.update()
-            self.logModel.update()
             self.outputModel.update()
+            self.logModel.update()
 
+            # TODO: Widget のレンダーはマルチスレッドにしても良いかもしれない
             self.cameraWidget.update()
             self.hashWidget.update()
             self.dataWidget.update()
@@ -97,8 +97,9 @@ class MainWindow(QWidget):
     def __del__(self) -> None:
         print("\ndispose")
         del self.captureModel
-        del self.logModel
         del self.hashModel
+        del self.outputModel
+        del self.logModel
 
 
 if __name__ == "__main__":
@@ -110,6 +111,5 @@ if __name__ == "__main__":
 
     app.exec()
 
-    # dispose
     del win
     sys.exit()

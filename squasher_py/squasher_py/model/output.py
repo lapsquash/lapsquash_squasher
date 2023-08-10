@@ -11,7 +11,7 @@ from squasher_py.helpers.state import State, TypeFrameBuff
 class OutputModel(Model):
     threadPool = ThreadPoolExecutor(max_workers=1000)
     writer: VideoWriter | None = None
-    latestClippingRangeArrLength: int = 0
+    latestClippingRangeArrLen: int = 0
 
     def __init__(self, state: State) -> None:
         super().__init__(state)
@@ -44,7 +44,11 @@ class OutputModel(Model):
         clippingIdx = clippingRangeArrLen - 1
         height, width, _ = __frameBuff.shape
 
-        if clippingRangeArrLen != self.latestClippingRangeArrLength:
+        if clippingRangeArrLen == 0:
+            return
+
+        # 切り抜き範囲の数が変化したら, 新しいファイルの準備
+        if clippingRangeArrLen != self.latestClippingRangeArrLen:
             print(f"{clippingIdx}.mp4: Creating output...")
             MP4_CODEC = 0x00000020
             self.writer = VideoWriter(
@@ -53,9 +57,10 @@ class OutputModel(Model):
                 __FPS,
                 (width, height),
             )
-            self.latestClippingRangeArrLength = clippingRangeArrLen
+            self.latestClippingRangeArrLen = clippingRangeArrLen
 
-        if clippingRangeArrLen != 0 and __clippingRangeArr[-1].end is None:
+        # 最後の切り抜き範囲の終点が None (= 未確定) のとき, 書き込む
+        if __clippingRangeArr[-1].end is None:
             self.threadPool.submit(
                 lambda: self.__writeFrame(
                     __frameBuff,
@@ -63,7 +68,6 @@ class OutputModel(Model):
                 )
             )
 
-        # On every second
         if __frameIdx % int(__FPS) == 0:
             self.__on_unit_time()
 
