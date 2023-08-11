@@ -9,9 +9,12 @@ from squasher_py.helpers.constants import (
     SLOPE_THRESHOLD_MIN,
 )
 from squasher_py.helpers.interfaces.model import Model
-
-# FIXME: isort が聞かない
-from squasher_py.helpers.state import ClipRange, State, TypeSlopeArr, TypeSlopeThreshold
+from squasher_py.helpers.state import (
+    ClippingRange,
+    State,
+    TypeSlopeArr,
+    TypeSlopeThreshold,
+)
 
 
 class HashModel(Model):
@@ -63,7 +66,7 @@ class HashModel(Model):
             self.state.slopeThresholdArr, slopeThreshold
         )
 
-    def __create_new_clip_range(self) -> None:
+    def __createNewClippingRange(self) -> None:
         """新しい切り抜き範囲を作成する"""
         state = self.state
         __frameIdx = state.frameIndex
@@ -81,13 +84,13 @@ class HashModel(Model):
                 f"\n[{clippingRangeLen}] CLIPPING START #{__frameIdx}..None",
             )
             self.state.clippingRangeArr.append(
-                ClipRange(
+                ClippingRange(
                     start=__frameIdx,
                     end=None,
                 ),
             )
 
-    def __computeClipRange(self) -> None:
+    def __computeClippingRange(self) -> None:
         state = self.state
         __FPS = state.FPS
         __frameIdx = state.frameIndex
@@ -102,7 +105,7 @@ class HashModel(Model):
 
         # 新しい切り抜き範囲をセット
         if clippingRangeLen == 0 or __clippingRangeArr[-1].end is not None:
-            self.__create_new_clip_range()
+            self.__createNewClippingRange()
             return
 
         latestClippingRange = __clippingRangeArr[-1]
@@ -115,7 +118,6 @@ class HashModel(Model):
                 "|  Continue frame while #{} <= #{}".format(
                     __frameIdx, clippingRangeMinFr
                 ),
-                end="\r",
             )
             return
 
@@ -128,7 +130,7 @@ class HashModel(Model):
                     clippingIdx, __clippingRangeArr[-1].start, __frameIdx
                 )
             )
-            self.state.clippingRangeArr[-1] = ClipRange(
+            self.state.clippingRangeArr[-1] = ClippingRange(
                 start=latestClippingRange.start,
                 end=__frameIdx,
             )
@@ -136,9 +138,9 @@ class HashModel(Model):
 
         print("|  Continue frame...")
 
-    def __on_unit_time(self) -> None:
+    def __onUnitTime(self) -> None:
         self.__computeSlope()
-        self.__computeClipRange()
+        self.__computeClippingRange()
 
     def update(self) -> None:
         state = self.state
@@ -154,7 +156,7 @@ class HashModel(Model):
 
         # 毎秒ごとの処理
         if __frameIdx % int(__FPS) == 0:
-            self.__on_unit_time()
+            self.__onUnitTime()
 
     def __del__(self) -> None:
         return

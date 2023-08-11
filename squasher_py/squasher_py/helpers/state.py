@@ -5,21 +5,21 @@ import cv2
 import numpy as np
 
 
-class ClipRange(NamedTuple):
+class ClippingRange(NamedTuple):
     start: int
     end: int | None
 
 
-TypeFrame = Tuple[int, int, int]  # RGB
+TypePixel = Tuple[int, int, int]  # RGB
 TypeHash = int
 TypeSlope = float
 TypeSlopeThreshold = float
 
-TypeFrameBuff = np.ndarray[TypeFrame, np.dtype[np.uint8]]
+TypeFrame = np.ndarray[TypePixel, np.dtype[np.uint8]]
 TypeHashArr = np.ndarray[TypeHash, np.dtype[np.uint64]]
 TypeSlopeArr = np.ndarray[TypeSlope, np.dtype[np.float64]]
 TypeSlopeThresholdArr = np.ndarray[TypeSlopeThreshold, np.dtype[np.float64]]
-TypeClipRangeArr = list[ClipRange]
+TypeClippingRangeArr = list[ClippingRange]
 
 
 @dataclass
@@ -43,11 +43,11 @@ class StateData:
           ...
       ]
     """
-    frameBuff: TypeFrameBuff
+    frameBuff: TypeFrame
     hashArr: TypeHashArr
     slopeArr: TypeSlopeArr
     slopeThresholdArr: TypeSlopeThresholdArr
-    clippingRangeArr: TypeClipRangeArr
+    clippingRangeArr: TypeClippingRangeArr
 
 
 class State(StateData):

@@ -1,6 +1,12 @@
 from os import makedirs, path
 
-from squasher_py.helpers.constants import LOG_DIR, LOG_PATH
+from squasher_py.helpers.constants import (
+    LOG_DIR,
+    LOG_PATH,
+    OUTPUT_DIR,
+    OUTPUT_SPLIT_DIR,
+    OUTPUT_TILES_DIR,
+)
 from squasher_py.helpers.interfaces.model import Model
 from squasher_py.helpers.state import State
 
@@ -10,15 +16,25 @@ class LogModel(Model):
         super().__init__(state)
         self.state = state
 
-        if not path.exists(LOG_DIR):
-            print("Creating output directory...")
-            makedirs(LOG_DIR, exist_ok=True)
+        self.prepareDir()
+
+    @staticmethod
+    def prepareDir() -> None:
+        for dir in [
+            LOG_DIR,
+            OUTPUT_DIR,
+            OUTPUT_SPLIT_DIR,
+            OUTPUT_TILES_DIR,
+        ]:
+            if not path.exists(dir):
+                print(f"Creating output directory...: {dir}")
+                makedirs(dir, exist_ok=True)
 
     def __writeLog(self, data: str) -> None:
         with open(LOG_PATH, "a") as file:
             file.write(data + "\n")
 
-    def __on_unit_time(self) -> None:
+    def __onUnitTime(self) -> None:
         state = self.state
         __FPS = state.FPS
         __frameIdx = state.frameIndex
@@ -43,7 +59,7 @@ class LogModel(Model):
 
         # On every second
         if __frameIdx % int(__FPS) == 0:
-            self.__on_unit_time()
+            self.__onUnitTime()
 
     def __del__(self) -> None:
         return

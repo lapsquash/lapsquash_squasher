@@ -1,5 +1,6 @@
 import cv2
 
+import squasher_py.model.utils.typed_cv2 as tcv2
 from squasher_py.helpers.constants import CAPTURE_RESOURCE
 from squasher_py.helpers.interfaces.model import Model
 from squasher_py.helpers.state import State
@@ -20,7 +21,7 @@ class CaptureModel(Model):
         state = self.state
         __CAPTURE = state.CAPTURE
 
-        ret, frame = __CAPTURE.read()  # type: ignore
+        ret, frame = tcv2.readNextFrame(__CAPTURE)
 
         if not ret:
             raise RuntimeError("No frame captured")

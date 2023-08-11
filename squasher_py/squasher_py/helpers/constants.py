@@ -12,6 +12,7 @@ LOG_DIR = path.join(OUTPUT_DIR, "logs")
 LOG_PATH = path.join(LOG_DIR, f"{__now_str}.log")
 
 OUTPUT_SPLIT_DIR = path.join(OUTPUT_DIR, "splits")
+OUTPUT_TILES_DIR = path.join(OUTPUT_DIR, "tiles")
 
 
 def getOutputSplitPath(idx: int):

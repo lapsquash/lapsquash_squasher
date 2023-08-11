@@ -5,7 +5,7 @@ from cv2 import VideoWriter
 
 from squasher_py.helpers.constants import OUTPUT_SPLIT_DIR, getOutputSplitPath
 from squasher_py.helpers.interfaces.model import Model
-from squasher_py.helpers.state import State, TypeFrameBuff
+from squasher_py.helpers.state import State, TypeFrame
 
 
 class OutputModel(Model):
@@ -23,13 +23,13 @@ class OutputModel(Model):
 
     def __writeFrame(
         self,
-        frame: TypeFrameBuff,
+        frame: TypeFrame,
         frameIdx: int,
     ) -> None:
         print(f"#{frameIdx} Writing frame...", end="\r")
         self.writer.write(frame)  # type: ignore
 
-    def __on_unit_time(self) -> None:
+    def __onUnitTime(self) -> None:
         return
 
     def update(self) -> None:
@@ -69,7 +69,7 @@ class OutputModel(Model):
             )
 
         if __frameIdx % int(__FPS) == 0:
-            self.__on_unit_time()
+            self.__onUnitTime()
 
     def __del__(self) -> None:
         print("Releasing output...")

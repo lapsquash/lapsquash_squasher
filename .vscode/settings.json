@@ -6,7 +6,10 @@
     "dtype",
     "fourcc",
     "fromarray",
+    "hconcat",
+    "hstack",
     "imagehash",
+    "imwrite",
     "lapsquash",
     "lapsquasher",
     "ndarray",
@@ -15,6 +18,7 @@
     "pyqtgraph",
     "TRPC",
     "UDEV",
+    "vconcat",
     "YOLO"
   ],
   "python.defaultInterpreterPath": "${workspaceFolder}/squasher_py/.venv/bin/python",
