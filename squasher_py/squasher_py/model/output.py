@@ -6,6 +6,7 @@ from cv2 import VideoWriter
 from squasher_py.helpers.constants import OUTPUT_SPLIT_DIR, getOutputSplitPath
 from squasher_py.helpers.interfaces.model import Model
 from squasher_py.helpers.state import State, TypeFrame
+from squasher_py.model.utils.tiles import createTiledImg
 
 
 class OutputModel(Model):
@@ -66,6 +67,12 @@ class OutputModel(Model):
                     __frameBuff,
                     __frameIdx,
                 )
+            )
+
+        # 切り抜き動画の生成完了 → タイル画像の生成
+        if __frameIdx == __clippingRangeArr[-1].end:
+            self.threadPool.submit(
+                lambda: createTiledImg(clippingIdx),
             )
 
         if __frameIdx % int(__FPS) == 0:

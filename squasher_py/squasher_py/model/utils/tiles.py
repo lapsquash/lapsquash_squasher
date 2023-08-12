@@ -16,23 +16,26 @@ if not capture.isOpened():
 
 
 def __createTile(frames: list[TypeFrame]) -> TypeFrame:
-    width = 10
+    width = 5
+    dropFrame = 10
     tiles: list[TypeFrame] = []
-    for i in range(0, len(frames), width):
+    for i in range(0, len(frames), dropFrame):
         tile = np.hstack(frames[i : (i + width)])  # noqa: E203 # FIXME: なぜ？？？
         tiles.append(tile)
     return np.vstack(tiles)
 
 
-def __saveTiledImg(tiledFrame: TypeFrame) -> None:
+def __saveTiledImg(idx: int, tiledFrame: TypeFrame) -> None:
     LogModel.prepareDir()
     tcv2.imwrite(
-        path.join(OUTPUT_TILES_DIR, "1.jpg"),
+        path.join(OUTPUT_TILES_DIR, f"{idx}.jpg"),
         tiledFrame,
     )
 
 
 def createTiledImg(idx: int) -> None:
+    print(f"\n[{idx}] Creating tiled image...")
+
     frameIdx: int = 0
     frames: list[TypeFrame] = []
 
@@ -49,12 +52,8 @@ def createTiledImg(idx: int) -> None:
 
         frameIdx += 1
 
-    print("Creating tiled image...")
     tiledFrame = __createTile(frames)
-    __saveTiledImg(tiledFrame)
+    __saveTiledImg(idx, tiledFrame)
+    print(f"[{idx}] Done!")
 
     return
-
-
-if __name__ == "__main__":
-    createTiledImg(0)
