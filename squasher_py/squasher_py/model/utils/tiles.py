@@ -8,12 +8,6 @@ from squasher_py.helpers.constants import OUTPUT_SPLIT_DIR, OUTPUT_TILES_DIR
 from squasher_py.helpers.state import TypeFrame
 from squasher_py.model.log import LogModel
 
-source = path.join(OUTPUT_SPLIT_DIR, "1.mp4")
-capture = cv2.VideoCapture(source)
-
-if not capture.isOpened():
-    raise RuntimeError("Error opening video stream or file")
-
 
 def __createTile(frames: list[TypeFrame]) -> TypeFrame:
     width = 5
@@ -35,6 +29,12 @@ def __saveTiledImg(idx: int, tiledFrame: TypeFrame) -> None:
 
 def createTiledImg(idx: int) -> None:
     print(f"\n[{idx}] Creating tiled image...")
+
+    source = path.join(OUTPUT_SPLIT_DIR, f"{idx}.mp4")
+    capture = cv2.VideoCapture(source)
+
+    if not capture.isOpened():
+        raise RuntimeError("Error opening video stream or file")
 
     frameIdx: int = 0
     frames: list[TypeFrame] = []

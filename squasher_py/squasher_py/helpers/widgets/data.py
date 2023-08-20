@@ -29,11 +29,17 @@ class DataWidget(Widget):
         __hashArr = state.hashArr
         __slopeArr = state.slopeArr
         __slopeThresholdArr = state.slopeThresholdArr
+        __clippingRangeArr = state.clippingRangeArr
+
+        cRangeStr = ""
 
         # < 1s のときの表示
         if len(__slopeArr) == 0:
             self.label.setText("__")
             return
+
+        for cRange in __clippingRangeArr:
+            cRangeStr += f"{cRange.start} - {cRange.end}\n"
 
         hash = __hashArr[-1]
         self.label.setText(
@@ -44,5 +50,7 @@ class DataWidget(Widget):
          __slopeArr[-1]: 0x{int(__slopeArr[-1]):016X}
 __slopeThresholdArr[-1]: 0x{int(__slopeThresholdArr[-1]):016X}
                needTrim: {__slopeArr[-1] > __slopeThresholdArr[-1]}
+clipping range:
+{cRangeStr}
             """
         )

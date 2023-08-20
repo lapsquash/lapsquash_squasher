@@ -22,7 +22,7 @@ def getOutputSplitPath(idx: int):
 CAPTURE_RESOURCE: int | str = path.join(
     Path.home(),
     "Downloads",
-    "videoplayback.mp4",
+    "_videoplayback.mp4",
 )
 # CAPTURE_RESOURCE: int | str = 0
 

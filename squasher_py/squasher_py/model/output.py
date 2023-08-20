@@ -71,6 +71,9 @@ class OutputModel(Model):
 
         # 切り抜き動画の生成完了 → タイル画像の生成
         if __frameIdx == __clippingRangeArr[-1].end:
+            if self.writer is None:
+                raise RuntimeError("self.writer is None")
+            self.writer.release()
             self.threadPool.submit(
                 lambda: createTiledImg(clippingIdx),
             )

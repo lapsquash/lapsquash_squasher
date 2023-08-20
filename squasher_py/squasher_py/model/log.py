@@ -41,16 +41,22 @@ class LogModel(Model):
 
         __slopeArr = state.slopeArr
         __slopeThresholdArr = state.slopeThresholdArr
+        __clippingRange = state.clippingRangeArr
 
-        data = "\t".join(
-            [
-                f"#{__frameIdx - int(__FPS)}..#{__frameIdx}",
-                f"| {(__slopeArr[-1]):.2f}",
-                f"| {(__slopeThresholdArr[-1]):.2f}",
-            ]
+        data = {
+            "frameIdx": __frameIdx,
+            "FPS": __FPS,
+            "hash": state.hashArr[-1],
+            "slope": __slopeArr[-1],
+            "slopeThreshold": __slopeThresholdArr[-1],
+            "clippingIdx": len(__clippingRange) - 1,
+        }
+
+        data["clippingRange"] = (
+            __clippingRange[-1] if len(__clippingRange) > 0 else None
         )
 
-        self.__writeLog(data)
+        self.__writeLog(str(data))
 
     def update(self) -> None:
         state = self.state
