@@ -1,6 +1,6 @@
 import cv2
 
-import squasher_py.model.utils.typed_cv2 as tcv2
+import squasher_py.model.utils.types.cv2 as tcv2
 from squasher_py.helpers.constants import CAPTURE_RESOURCE
 from squasher_py.helpers.interfaces.model import Model
 from squasher_py.helpers.state import State

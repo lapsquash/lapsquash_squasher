@@ -2,7 +2,9 @@
   "cSpell.words": [
     "APPDATA",
     "arange",
+    "bardapi",
     "dhash",
+    "dotenv",
     "dtype",
     "fourcc",
     "fromarray",
@@ -16,6 +18,7 @@
     "oclif",
     "polyfit",
     "pyqtgraph",
+    "tbard",
     "TRPC",
     "UDEV",
     "vconcat",
