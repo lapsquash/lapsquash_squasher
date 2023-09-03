@@ -4,6 +4,8 @@ import cv2
 from PySide6.QtCore import Qt, QTimer
 from PySide6.QtWidgets import QApplication, QHBoxLayout, QVBoxLayout, QWidget
 
+from squasher_py.helpers.interfaces.model import Model
+from squasher_py.helpers.interfaces.widget import Widget
 from squasher_py.helpers.state import State
 from squasher_py.helpers.widgets.camera import CameraWidget
 from squasher_py.helpers.widgets.data import DataWidget
@@ -25,24 +27,29 @@ class MainWindow(QWidget):
 
     def __defineModelOrWidget(self) -> None:
         # Model の初期化
-        self.captureModel = CaptureModel(self.state)
-        self.logModel = LogModel(self.state)
-        self.hashModel = HashModel(self.state)
-        self.outputModel = OutputModel(self.state)
+        self.models: list[Model] = [
+            # MUST: capture は必ず最初
+            CaptureModel(self.state),
+            HashModel(self.state),
+            LogModel(self.state),
+            OutputModel(self.state),
+        ]
 
         # Widget の初期化
-        self.hashWidget = HashWidget(self.state)
-        self.cameraWidget = CameraWidget(self.state)
-        self.dataWidget = DataWidget(self.state)
+        self.widgets: list[Widget] = [
+            CameraWidget(self.state),
+            DataWidget(self.state),
+            HashWidget(self.state),
+        ]
 
     def __defineLayout(self) -> None:
         # Window の設定
         self.setWindowTitle("Squasher")
         self.setStyleSheet("background-color: #000")
 
-        cameraWidget = self.cameraWidget.get()
-        dataWidget = self.dataWidget.get()
-        hashWidget = self.hashWidget.get()
+        cameraWidget = self.widgets[0].get()
+        dataWidget = self.widgets[1].get()
+        hashWidget = self.widgets[2].get()
 
         # レイアウトの設定
         hLayout = QHBoxLayout(self)
@@ -71,21 +78,18 @@ class MainWindow(QWidget):
         # ref: https://qiita.com/Kanahiro/items/8075546b2fea0b6baf5d
         timer.timeout.connect(lambda: self.__update())
 
-        timer.start(int(1000 / self.state.FPS))
+        # timer.start(int(1000 / self.state.FPS))
+        timer.start(0)
 
     def __update(self) -> None:
         """イベントループ"""
         try:
-            # MUST: capture は必ず最初
-            self.captureModel.update()
-            self.hashModel.update()
-            self.outputModel.update()
-            self.logModel.update()
+            for model in self.models:
+                model.update()
 
             # TODO: Widget のレンダーはマルチスレッドにしても良いかもしれない
-            self.cameraWidget.update()
-            self.hashWidget.update()
-            self.dataWidget.update()
+            for widget in self.widgets:
+                widget.update()
 
         except Exception as e:
             raise e
@@ -96,10 +100,8 @@ class MainWindow(QWidget):
 
     def __del__(self) -> None:
         print("\ndispose")
-        del self.captureModel
-        del self.hashModel
-        del self.outputModel
-        del self.logModel
+        for model in self.models:
+            del model
 
 
 if __name__ == "__main__":

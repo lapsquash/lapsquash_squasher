@@ -29,7 +29,6 @@ class DataWidget(Widget):
         __hashArr = state.hashArr
         __slopeArr = state.slopeArr
         __slopeThresholdArr = state.slopeThresholdArr
-        __clippingRangeArr = state.clippingRangeArr
 
         cRangeStr = ""
 
@@ -38,8 +37,8 @@ class DataWidget(Widget):
             self.label.setText("__")
             return
 
-        for cRange in __clippingRangeArr:
-            cRangeStr += f"{cRange.start} - {cRange.end}\n"
+        # for cRange in __clippingRangeArr:
+        #     cRangeStr += f"{cRange.start} - {cRange.end}\n"
 
         hash = __hashArr[-1]
         self.label.setText(

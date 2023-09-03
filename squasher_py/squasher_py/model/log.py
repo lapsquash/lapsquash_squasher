@@ -1,3 +1,4 @@
+import json
 from os import makedirs, path
 
 from squasher_py.helpers.constants import (
@@ -46,17 +47,17 @@ class LogModel(Model):
         data = {
             "frameIdx": __frameIdx,
             "FPS": __FPS,
-            "hash": state.hashArr[-1],
-            "slope": __slopeArr[-1],
-            "slopeThreshold": __slopeThresholdArr[-1],
+            "hash": str(state.hashArr[-1]),
+            "slope": str(__slopeArr[-1]),
+            "slopeThreshold": str(__slopeThresholdArr[-1]),
             "clippingIdx": len(__clippingRange) - 1,
         }
 
-        data["clippingRange"] = (
+        data["clippingRange"] = str(
             __clippingRange[-1] if len(__clippingRange) > 0 else None
         )
 
-        self.__writeLog(str(data))
+        self.__writeLog(json.dumps(data, ensure_ascii=False, indent=2))
 
     def update(self) -> None:
         state = self.state
@@ -68,4 +69,14 @@ class LogModel(Model):
             self.__onUnitTime()
 
     def __del__(self) -> None:
+        state = self.state
+        __clippingRange = state.clippingRangeArr
+
+        self.__writeLog(
+            json.dumps(
+                __clippingRange,
+                ensure_ascii=False,
+                indent=2,
+            ),
+        )
         return
