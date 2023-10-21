@@ -1,8 +1,8 @@
 import pyqtgraph as pg
 from PySide6.QtWidgets import QLabel, QWidget
 
-from squasher_py.helpers.interfaces.widget import Widget
-from squasher_py.helpers.state import State
+from squasher_core.helpers.interfaces.widget import Widget
+from squasher_core.helpers.state import State
 
 
 class DataWidget(Widget):

@@ -2,9 +2,9 @@ import cv2
 import pyqtgraph as pg
 from PySide6.QtWidgets import QWidget
 
-import squasher_py.model.utils.types.cv2 as tcv2
-from squasher_py.helpers.interfaces.widget import Widget
-from squasher_py.helpers.state import State
+import squasher_core.model.utils.types.cv2 as tcv2
+from squasher_core.helpers.interfaces.widget import Widget
+from squasher_core.helpers.state import State
 
 
 class CameraWidget(Widget):

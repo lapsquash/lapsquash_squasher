@@ -4,16 +4,16 @@ import cv2
 from PySide6.QtCore import Qt, QTimer
 from PySide6.QtWidgets import QApplication, QHBoxLayout, QVBoxLayout, QWidget
 
-from squasher_py.helpers.interfaces.model import Model
-from squasher_py.helpers.interfaces.widget import Widget
-from squasher_py.helpers.state import State
-from squasher_py.helpers.widgets.camera import CameraWidget
-from squasher_py.helpers.widgets.data import DataWidget
-from squasher_py.helpers.widgets.hash import HashWidget
-from squasher_py.model.capture import CaptureModel
-from squasher_py.model.hash import HashModel
-from squasher_py.model.log import LogModel
-from squasher_py.model.output import OutputModel
+from squasher_core.helpers.interfaces.model import Model
+from squasher_core.helpers.interfaces.widget import Widget
+from squasher_core.helpers.state import State
+from squasher_core.helpers.widgets.camera import CameraWidget
+from squasher_core.helpers.widgets.data import DataWidget
+from squasher_core.helpers.widgets.hash import HashWidget
+from squasher_core.model.capture import CaptureModel
+from squasher_core.model.hash import HashModel
+from squasher_core.model.log import LogModel
+from squasher_core.model.output import OutputModel
 
 
 class MainWindow(QWidget):

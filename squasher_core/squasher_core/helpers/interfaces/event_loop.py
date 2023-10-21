@@ -1,6 +1,6 @@
 from abc import ABCMeta, abstractmethod
 
-from squasher_py.helpers.state import State
+from squasher_core.helpers.state import State
 
 
 class EventLoop(metaclass=ABCMeta):

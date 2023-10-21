@@ -3,10 +3,10 @@ from os import makedirs, path
 
 from cv2 import VideoWriter
 
-from squasher_py.helpers.constants import OUTPUT_SPLIT_DIR, getOutputSplitPath
-from squasher_py.helpers.interfaces.model import Model
-from squasher_py.helpers.state import State, TypeFrame
-from squasher_py.model.utils.tiles import createTiledImg
+from squasher_core.helpers.constants import OUTPUT_SPLIT_DIR, getOutputSplitPath
+from squasher_core.helpers.interfaces.model import Model
+from squasher_core.helpers.state import State, TypeFrame
+from squasher_core.model.utils.tiles import createTiledImg
 
 
 class OutputModel(Model):

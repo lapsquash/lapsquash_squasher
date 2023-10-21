@@ -1,7 +1,7 @@
 from bardapi import Bard
 
-from squasher_py.helpers.env import getEnv
-from squasher_py.model.utils.types.bard import TBard
+from squasher_core.helpers.env import getEnv
+from squasher_core.model.utils.types.bard import TBard
 
 env = getEnv()
 

@@ -24,7 +24,7 @@
     "vconcat",
     "YOLO"
   ],
-  "python.defaultInterpreterPath": "${workspaceFolder}/squasher_py/.venv/bin/python",
+  "python.defaultInterpreterPath": "${workspaceFolder}/squasher_core/.venv/bin/python",
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
   },

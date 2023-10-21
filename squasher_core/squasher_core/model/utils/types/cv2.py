@@ -5,7 +5,7 @@ from typing import Callable
 import cv2
 from cv2 import VideoCapture
 
-from squasher_py.helpers.state import TypeFrame
+from squasher_core.helpers.state import TypeFrame
 
 cvtColor: Callable[[TypeFrame, int], TypeFrame] = cv2.cvtColor
 

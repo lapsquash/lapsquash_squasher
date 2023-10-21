@@ -1,7 +1,7 @@
 {
-  "name": "@lapsquash/squasher",
+  "name": "@lapsquash/squasher_cli",
   "version": "0.0.1",
-  "description": "squasher for lapsquash",
+  "description": "squasher CLI for lapsquash",
   "author": {
     "name": "lapsquash",
     "email": "wappon_28_dev@lapsquash.my.to"
@@ -9,7 +9,7 @@
   "repository": "lapsquash/lapsquash_viewer",
   "private": true,
   "bin": {
-    "lapsquasher": "./bin/run"
+    "lapsquasher_cli": "./bin/run"
   },
   "license": "MIT",
   "main": "dist/index.js",
@@ -59,8 +59,8 @@
     "typescript-transform-paths": "^3.4.6"
   },
   "oclif": {
-    "bin": "lapsquasher",
-    "dirname": "lapsquasher",
+    "bin": "lapsquasher_cli",
+    "dirname": "lapsquasher_cli",
     "commands": "./dist/commands",
     "plugins": [
       "@oclif/plugin-help",

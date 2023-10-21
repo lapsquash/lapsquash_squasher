@@ -3,10 +3,10 @@ from os import path
 import cv2
 import numpy as np
 
-import squasher_py.model.utils.types.cv2 as tcv2
-from squasher_py.helpers.constants import OUTPUT_SPLIT_DIR, OUTPUT_TILES_DIR
-from squasher_py.helpers.state import TypeFrame
-from squasher_py.model.log import LogModel
+import squasher_core.model.utils.types.cv2 as tcv2
+from squasher_core.helpers.constants import OUTPUT_SPLIT_DIR, OUTPUT_TILES_DIR
+from squasher_core.helpers.state import TypeFrame
+from squasher_core.model.log import LogModel
 
 
 def __createTile(frames: list[TypeFrame]) -> TypeFrame:

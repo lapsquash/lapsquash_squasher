@@ -1,15 +1,15 @@
 import json
 from os import makedirs, path
 
-from squasher_py.helpers.constants import (
+from squasher_core.helpers.constants import (
     LOG_DIR,
     LOG_PATH,
     OUTPUT_DIR,
     OUTPUT_SPLIT_DIR,
     OUTPUT_TILES_DIR,
 )
-from squasher_py.helpers.interfaces.model import Model
-from squasher_py.helpers.state import State
+from squasher_core.helpers.interfaces.model import Model
+from squasher_core.helpers.state import State
 
 
 class LogModel(Model):

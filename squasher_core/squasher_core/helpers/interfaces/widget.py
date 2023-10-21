@@ -2,8 +2,8 @@ from abc import ABCMeta, abstractmethod
 
 from PySide6.QtWidgets import QWidget
 
-from squasher_py.helpers.interfaces.event_loop import EventLoop
-from squasher_py.helpers.state import State
+from squasher_core.helpers.interfaces.event_loop import EventLoop
+from squasher_core.helpers.state import State
 
 
 class Widget(EventLoop, metaclass=ABCMeta):

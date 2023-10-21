@@ -3,13 +3,13 @@ import pandas as pd
 from imagehash import dhash  # type: ignore
 from PIL import Image
 
-from squasher_py.helpers.constants import (
+from squasher_core.helpers.constants import (
     CLIP_RANGE_MIN_SECOND,
     SLOPE_THRESHOLD_MAX,
     SLOPE_THRESHOLD_MIN,
 )
-from squasher_py.helpers.interfaces.model import Model
-from squasher_py.helpers.state import (
+from squasher_core.helpers.interfaces.model import Model
+from squasher_core.helpers.state import (
     ClippingRange,
     State,
     TypeSlopeArr,

@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "squasher-py"
+name = "squasher_core"
 version = "0.1.0"
 description = ""
 authors = ["wappon28dev <wappon_28_dev@ruru.be>"]
 readme = "README.md"
-packages = [{ include = "squasher_py" }]
+packages = [{ include = "squasher_core" }]
 
 [tool.poetry.dependencies]
 python = "3.11.2"
