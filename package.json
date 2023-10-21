@@ -4,14 +4,16 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "poetry": "cd squasher_core && poetry",
-    "prepare": "yarn poetry install",
+    "poetry:core": "cd squasher_core && poetry",
+    "poetry:inspector": "cd squasher_inspector && poetry",
+    "prepare": "yarn poetry:core install && yarn poetry:inspector install",
     "dev": "yarn workspace @lapsquash/squasher_cli run dev",
-    "dev:py": "yarn poetry run python ./squasher_core/main.py",
+    "dev:core": "yarn poetry:core run python ./squasher_core/main.py",
     "dev:analyzer": "yarn workspace @lapsquash/analyzer run dev",
+    "dev:inspector": "yarn poetry:inspector run python ./squasher_inspector/main.py",
     "test:analyzer": "yarn workspace @lapsquash/analyzer run test",
     "build": "yarn workspace @lapsquash/squasher_cli run build",
-    "examples:py": "yarn poetry run python ./squasher_core/helpers/examples.py"
+    "examples:py": "yarn poetry:core run python ./squasher_core/helpers/examples.py"
   },
   "workspaces": {
     "packages": [
