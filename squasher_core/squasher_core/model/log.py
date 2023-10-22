@@ -5,19 +5,34 @@ from squasher_core.helpers.constants import (
     LOG_DIR,
     LOG_PATH,
     OUTPUT_DIR,
+    OUTPUT_MANIFEST_PATH,
     OUTPUT_SPLIT_DIR,
     OUTPUT_TILES_DIR,
 )
 from squasher_core.helpers.interfaces.model import Model
 from squasher_core.helpers.state import State
+from squasher_core.model.utils.types.manifest import (
+    ProjectManifest,
+    ProjectManifestAsset,
+)
 
 
 class LogModel(Model):
+    projectManifest: ProjectManifest
+
     def __init__(self, state: State) -> None:
         super().__init__(state)
         self.state = state
+        self.projectManifest = ProjectManifest(
+            name="saple",
+            description="sadfasd",
+            version="",
+            startWith=0,
+            assets=[],
+        )
 
         self.prepareDir()
+        self.__writePjManifest()
 
     @staticmethod
     def prepareDir() -> None:
@@ -31,9 +46,40 @@ class LogModel(Model):
                 print(f"Creating output directory...: {dir}")
                 makedirs(dir, exist_ok=True)
 
+    def __writePjManifest(self) -> None:
+        pjManifestJson = self.projectManifest.to_json(  # type: ignore
+            indent=2,
+            ensure_ascii=False,
+        )
+
+        with open(OUTPUT_MANIFEST_PATH, "w") as file:
+            file.write(pjManifestJson)
+
     def __writeLog(self, data: str) -> None:
         with open(LOG_PATH, "a") as file:
             file.write(data + "\n")
+
+    def __updatePjManifest(self) -> None:
+        state = self.state
+        __frameIdx = state.frameIndex
+        __clippingRangeArr = state.clippingRangeArr
+
+        # 切り抜き動画の生成完了 → PjManifest の assets に追加
+        if __frameIdx == __clippingRangeArr[-1].end:
+            assert __clippingRangeArr[-1].end is not None
+
+            durationMs = (
+                __clippingRangeArr[-1].end - __clippingRangeArr[-1].start
+            ) * 1000
+
+            self.projectManifest.assets.append(
+                ProjectManifestAsset(
+                    elapsedMs=0,
+                    durationMs=durationMs,
+                    analysis=None,
+                )
+            )
+            self.__writePjManifest()
 
     def __onUnitTime(self) -> None:
         state = self.state
@@ -58,6 +104,7 @@ class LogModel(Model):
         )
 
         self.__writeLog(json.dumps(data, ensure_ascii=False, indent=2))
+        self.__updatePjManifest()
 
     def update(self) -> None:
         state = self.state

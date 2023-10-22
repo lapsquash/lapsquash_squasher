@@ -7,12 +7,19 @@ import squasher_core
 __now = datetime.now()
 __now_str = __now.strftime("%Y-%m-%d_%H-%M-%S")
 
-OUTPUT_DIR = path.join(path.dirname(squasher_core.__file__), "..", "out")
+OUTPUT_DIR = path.join(
+    path.dirname(squasher_core.__file__),
+    "..",
+    "..",
+    "out",
+)
+
 LOG_DIR = path.join(OUTPUT_DIR, "logs")
 LOG_PATH = path.join(LOG_DIR, f"{__now_str}.log")
 
 OUTPUT_SPLIT_DIR = path.join(OUTPUT_DIR, "splits")
 OUTPUT_TILES_DIR = path.join(OUTPUT_DIR, "tiles")
+OUTPUT_MANIFEST_PATH = path.join(OUTPUT_DIR, "manifest.json")
 
 
 def getOutputSplitPath(idx: int):
