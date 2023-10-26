@@ -1,48 +1,41 @@
-from typing import NamedTuple
+from os import path
+
+from squasher_inspector.helpers.env import getEnv
+from squasher_inspector.utils.parser import manifest2clippingRange, parseManifest
+from squasher_inspector.utils.types.clipping import ClippingRange
 
 
-class ClippingRange(NamedTuple):
-    start: int
-    end: int
-
-
-def calculate_match_rate(
-    range_list_true: list[ClippingRange],
-    range_list_target: list[ClippingRange],
-    err_start: int = 0,
-    err_end: int = 0,
+def calculateMatchRate(
+    rangeListTrue: list[ClippingRange],
+    rangeListTarget: list[ClippingRange],
+    errStart: int = 0,
+    errEnd: int = 0,
 ) -> float:
-    def extract_numbers(range_list: list[ClippingRange]) -> set[int]:
+    def extractRangeSet(range_list: list[ClippingRange]) -> set[int]:
         numbers: set[int] = set()
         for start, end in range_list:
-            numbers.update(range(start - err_start, end + 1 + err_end))
+            numbers.update(range(start - errStart, end + 1 + errEnd))
         return numbers
 
-    set_1 = extract_numbers(range_list_true)
-    set_2 = extract_numbers(range_list_target)
+    setTrue = extractRangeSet(rangeListTrue)
+    setTarget = extractRangeSet(rangeListTarget)
 
     # 一致した数値を数える
-    matching_numbers = set_1.intersection(set_2)
+    matchedNumbers = setTrue.intersection(setTarget)
 
     # 一致率を計算
-    match_rate = len(matching_numbers) / len(set_1) * 100
-    return match_rate
+    return len(matchedNumbers) / len(setTrue) * 100
 
 
-range_list_true = [
-    ClippingRange(1, 2),
-    ClippingRange(3, 19),
-    ClippingRange(20, 25),
-]
+if __name__ == "__main__":
+    env = getEnv()
+    outDirTrue = env.INSPECT_TRUE_OUT_DIR
+    outDirTarget = env.INSPECT_TARGET_OUT_DIR
 
-range_list_target = [
-    ClippingRange(4, 26),
-    ClippingRange(20, 26),
-]
+    manifestTrue = parseManifest(path.join(outDirTrue, "manifest.json"))
+    manifestTarget = parseManifest(path.join(outDirTarget, "manifest.json"))
 
-match_rate = calculate_match_rate(
-    range_list_true,
-    range_list_target,
-)
-
-print(f"一致率: {match_rate:.2f}%")
+    matchRate = calculateMatchRate(
+        rangeListTrue=manifest2clippingRange(manifestTrue),
+        rangeListTarget=manifest2clippingRange(manifestTarget),
+    )

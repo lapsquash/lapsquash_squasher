@@ -1,0 +1,1 @@
+../../../../squasher_core/squasher_core/model/utils/types/manifest.py
