@@ -1,5 +1,6 @@
 import json
 from os import makedirs, path
+from time import time
 
 from squasher_core.helpers.constants import (
     LOG_DIR,
@@ -11,28 +12,23 @@ from squasher_core.helpers.constants import (
 )
 from squasher_core.helpers.interfaces.model import Model
 from squasher_core.helpers.state import State
-from squasher_core.model.utils.types.manifest import (
-    ProjectManifest,
-    ProjectManifestAsset,
-)
+from squasher_core.model.utils.types.manifest import Manifest, ManifestAsset
 
 
 class LogModel(Model):
-    projectManifest: ProjectManifest
-
     def __init__(self, state: State) -> None:
         super().__init__(state)
         self.state = state
-        self.projectManifest = ProjectManifest(
-            name="saple",
-            description="sadfasd",
+        self.state.manifest = Manifest(
+            name="sample",
+            description="",
             version="",
-            startWith=0,
+            startWith=int(time()),
             assets=[],
         )
 
         self.prepareDir()
-        self.__writePjManifest()
+        self.__writeManifest()
 
     @staticmethod
     def prepareDir() -> None:
@@ -46,40 +42,43 @@ class LogModel(Model):
                 print(f"Creating output directory...: {dir}")
                 makedirs(dir, exist_ok=True)
 
-    def __writePjManifest(self) -> None:
-        pjManifestJson = self.projectManifest.to_json(  # type: ignore
+    def __writeManifest(self) -> None:
+        manifestJson = self.state.manifest.to_json(  # type: ignore
             indent=2,
             ensure_ascii=False,
         )
 
         with open(OUTPUT_MANIFEST_PATH, "w") as file:
-            file.write(pjManifestJson)
+            file.write(manifestJson)
 
     def __writeLog(self, data: str) -> None:
         with open(LOG_PATH, "a") as file:
             file.write(data + "\n")
 
-    def __updatePjManifest(self) -> None:
+    def __updateManifest(self) -> None:
         state = self.state
         __frameIdx = state.frameIndex
         __clippingRangeArr = state.clippingRangeArr
+        __projectManifest = state.manifest
 
-        # 切り抜き動画の生成完了 → PjManifest の assets に追加
+        # 切り抜き動画の生成完了 → manifest の assets に追加
         if __frameIdx == __clippingRangeArr[-1].end:
-            assert __clippingRangeArr[-1].end is not None
+            lastClippingRange = __clippingRangeArr[-1]
 
-            durationMs = (
-                __clippingRangeArr[-1].end - __clippingRangeArr[-1].start
-            ) * 1000
+            if lastClippingRange.end is None:
+                raise RuntimeError("Clipping range is not set")
 
-            self.projectManifest.assets.append(
-                ProjectManifestAsset(
-                    elapsedMs=0,
-                    durationMs=durationMs,
+            durationSec = lastClippingRange.end - lastClippingRange.start
+            elapsedSec = (int(time()) - __projectManifest.startWith) * 1000
+
+            self.state.manifest.assets.append(
+                ManifestAsset(
+                    elapsedMs=elapsedSec * 1000,
+                    durationMs=durationSec * 1000,
                     analysis=None,
                 )
             )
-            self.__writePjManifest()
+            self.__writeManifest()
 
     def __onUnitTime(self) -> None:
         state = self.state
@@ -104,7 +103,7 @@ class LogModel(Model):
         )
 
         self.__writeLog(json.dumps(data, ensure_ascii=False, indent=2))
-        self.__updatePjManifest()
+        self.__updateManifest()
 
     def update(self) -> None:
         state = self.state

@@ -1,11 +1,10 @@
 from dataclasses import dataclass
-from time import time
 from typing import NamedTuple, Tuple
 
 import cv2
 import numpy as np
 
-from squasher_core.model.utils.types.manifest import ProjectManifest
+from squasher_core.model.utils.types.manifest import Manifest
 
 
 class ClippingRange(NamedTuple):
@@ -51,7 +50,7 @@ class StateData:
     slopeArr: TypeSlopeArr
     slopeThresholdArr: TypeSlopeThresholdArr
     clippingRangeArr: TypeClippingRangeArr
-    projectManifest: ProjectManifest
+    manifest: Manifest
 
 
 class State(StateData):
@@ -63,13 +62,4 @@ class State(StateData):
         self.slopeThresholdArr = np.array([], dtype=np.float64)
         self.clippingRangeArr = []
 
-        # UNIX time
-        unixTime = int(time())
-
-        self.projectManifest = ProjectManifest(
-            name="sample",
-            description="",
-            version="",
-            startWith=unixTime,
-            assets=[],
-        )
+        # NOTE: `manifest` は LogModel で初期化する

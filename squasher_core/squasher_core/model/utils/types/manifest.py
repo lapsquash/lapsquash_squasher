@@ -5,7 +5,7 @@ from dataclasses_json import DataClassJsonMixin, dataclass_json
 
 @dataclass_json
 @dataclass
-class ProjectManifestAssetAnalysis(DataClassJsonMixin):
+class ManifestAssetAnalysis(DataClassJsonMixin):
     title: str
     tags: list[str]
     description: str
@@ -13,17 +13,17 @@ class ProjectManifestAssetAnalysis(DataClassJsonMixin):
 
 @dataclass_json
 @dataclass
-class ProjectManifestAsset(DataClassJsonMixin):
+class ManifestAsset(DataClassJsonMixin):
     elapsedMs: int
     durationMs: int
-    analysis: ProjectManifestAssetAnalysis | None
+    analysis: ManifestAssetAnalysis | None
 
 
 @dataclass_json
 @dataclass
-class ProjectManifest(DataClassJsonMixin):
+class Manifest(DataClassJsonMixin):
     name: str
     description: str
     version: str
     startWith: int
-    assets: list[ProjectManifestAsset]
+    assets: list[ManifestAsset]
