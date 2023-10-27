@@ -12,6 +12,7 @@ black = "^23.7.0"
 bardapi = "0.1.33"
 dataclasses-json = "^0.6.1"
 python-dotenv = "^1.0.0"
+matplotlib = "^3.8.0"
 
 [build-system]
 requires = ["poetry-core"]

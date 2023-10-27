@@ -1,7 +1,8 @@
 from os import path
 
 from squasher_inspector.helpers.env import getEnv
-from squasher_inspector.utils.parser import manifest2clippingRange, parseManifest
+from squasher_inspector.utils.parser import manifest2clippingRange  # noqa
+from squasher_inspector.utils.parser import parseManifest
 from squasher_inspector.utils.types.clipping import ClippingRange
 
 
