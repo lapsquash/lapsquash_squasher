@@ -15,7 +15,7 @@ class CaptureModel(Model):
         self.state.FPS = self.state.CAPTURE.get(cv2.CAP_PROP_FPS)
 
         if not self.state.CAPTURE.isOpened():
-            raise IOError("Cannot open")
+            raise OSError("Cannot open")
 
     def update(self) -> None:
         state = self.state
@@ -32,4 +32,3 @@ class CaptureModel(Model):
     def __del__(self) -> None:
         print("Releasing capture...")
         self.state.CAPTURE.release()
-        return

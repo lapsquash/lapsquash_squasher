@@ -45,7 +45,7 @@ class DataWidget(Widget):
             f"""
 {__FPS:.2f} FPS
 #{__frameIdx}\t{(__frameIdx/__FPS):.2f}s
-0x{int(hash):016X} = {str(int(hash))}
+0x{int(hash):016X} = {int(hash)!s}
          __slopeArr[-1]: 0x{int(__slopeArr[-1]):016X}
 __slopeThresholdArr[-1]: 0x{int(__slopeThresholdArr[-1]):016X}
                needTrim: {__slopeArr[-1] > __slopeThresholdArr[-1]}

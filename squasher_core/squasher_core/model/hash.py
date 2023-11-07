@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from imagehash import dhash  # type: ignore
+from imagehash import dhash
 from PIL import Image
 
 from squasher_core.helpers.constants import (
@@ -63,7 +63,8 @@ class HashModel(Model):
         # 変化率から動的なしきい値を計算
         slopeThreshold = self.computeEMA(self.state.slopeArr)
         self.state.slopeThresholdArr = np.append(
-            self.state.slopeThresholdArr, slopeThreshold
+            self.state.slopeThresholdArr,
+            slopeThreshold,
         )
 
     def __createNewClippingRange(self) -> None:
@@ -115,9 +116,7 @@ class HashModel(Model):
         # 切り抜き範囲が最低フレーム数を満たしていない場合は継続
         if __frameIdx <= clippingRangeMinFr:
             print(
-                "|  Continue frame while #{} <= #{}".format(
-                    __frameIdx, clippingRangeMinFr
-                ),
+                f"|  Continue frame while #{__frameIdx} <= #{clippingRangeMinFr}",
             )
             return
 
@@ -127,8 +126,10 @@ class HashModel(Model):
         if slope < slopeThreshold:
             print(
                 "[{}] CLIPPING END #{}..#{}".format(
-                    clippingIdx, __clippingRangeArr[-1].start, __frameIdx
-                )
+                    clippingIdx,
+                    __clippingRangeArr[-1].start,
+                    __frameIdx,
+                ),
             )
             self.state.clippingRangeArr[-1] = ClippingRange(
                 start=latestClippingRange.start,

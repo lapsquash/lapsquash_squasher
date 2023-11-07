@@ -54,7 +54,7 @@ class StateData:
 
 
 class State(StateData):
-    def __init__(self):
+    def __init__(self) -> None:
         self.frameIndex: int = 0
         self.frameBuff = np.array([], dtype=np.uint8)
         self.hashArr = np.array([], dtype=np.uint64)

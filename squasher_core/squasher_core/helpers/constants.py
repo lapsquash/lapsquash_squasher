@@ -4,7 +4,7 @@ from pathlib import Path
 
 import squasher_core
 
-__now = datetime.now()
+__now = datetime.now(tz=datetime.now().astimezone().tzinfo)
 __now_str = __now.strftime("%Y-%m-%d_%H-%M-%S")
 
 OUTPUT_DIR = path.join(
@@ -22,7 +22,7 @@ OUTPUT_TILES_DIR = path.join(OUTPUT_DIR, "tiles")
 OUTPUT_MANIFEST_PATH = path.join(OUTPUT_DIR, "manifest.json")
 
 
-def getOutputSplitPath(idx: int):
+def getOutputSplitPath(idx: int) -> str:
     return path.join(OUTPUT_SPLIT_DIR, f"{idx}.mp4")
 
 

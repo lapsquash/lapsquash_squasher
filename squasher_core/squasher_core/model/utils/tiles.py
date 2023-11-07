@@ -14,7 +14,7 @@ def __createTile(frames: list[TypeFrame]) -> TypeFrame:
     dropFrame = 10
     tiles: list[TypeFrame] = []
     for i in range(0, len(frames), dropFrame):
-        tile = np.hstack(frames[i : (i + width)])  # noqa: E203 # FIXME: なぜ？？？
+        tile = np.hstack(frames[i : (i + width)])  # FIXME: なぜ？？？
         tiles.append(tile)
     return np.vstack(tiles)
 
@@ -56,4 +56,3 @@ def createTiledImg(idx: int) -> None:
     __saveTiledImg(idx, tiledFrame)
     print(f"[{idx}] Done!")
 
-    return

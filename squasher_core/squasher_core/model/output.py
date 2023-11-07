@@ -85,4 +85,3 @@ class OutputModel(Model):
         print("Releasing output...")
         self.threadPool.shutdown(wait=True)
         print("Output released!")
-        return

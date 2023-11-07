@@ -125,4 +125,3 @@ class LogModel(Model):
                 indent=2,
             ),
         )
-        return

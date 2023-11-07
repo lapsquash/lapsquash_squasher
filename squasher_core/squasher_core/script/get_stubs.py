@@ -3,7 +3,7 @@ import os
 import cv2
 import requests
 
-url = "https://raw.githubusercontent.com/bschnurr/python-type-stubs/add-opencv/cv2/__init__.pyi"  # noqa
+url: str = "https://raw.githubusercontent.com/bschnurr/python-type-stubs/add-opencv/cv2/__init__.pyi"
 
 path = os.path.join(
     os.path.dirname(cv2.__file__),
