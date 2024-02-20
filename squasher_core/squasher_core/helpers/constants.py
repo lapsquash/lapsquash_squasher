@@ -1,6 +1,5 @@
 from datetime import datetime
 from os import path
-from pathlib import Path
 
 import squasher_core
 
@@ -26,12 +25,14 @@ def getOutputSplitPath(idx: int) -> str:
     return path.join(OUTPUT_SPLIT_DIR, f"{idx}.mp4")
 
 
-CAPTURE_RESOURCE: int | str = path.join(
-    Path.home(),
-    "Downloads",
-    "_videoplayback.mp4",
-)
-# CAPTURE_RESOURCE: int | str = 0
+# CAPTURE_RESOURCE: int | str = path.join(
+#     Path.home(),
+#     "Downloads",
+#     "_videoplayback.mp4",
+# )
+CAPTURE_RESOURCE: int | str = 0
+CAPTURE_SCALE_FACTOR: float = 0.5
+CAPTURE_FPS: int = 30
 
 SLOPE_THRESHOLD_MIN: int = 2**20
 SLOPE_THRESHOLD_MAX: int = 2**60

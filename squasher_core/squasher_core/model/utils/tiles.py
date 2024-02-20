@@ -55,4 +55,3 @@ def createTiledImg(idx: int) -> None:
     tiledFrame = __createTile(frames)
     __saveTiledImg(idx, tiledFrame)
     print(f"[{idx}] Done!")
-
